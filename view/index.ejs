@@ -1,0 +1,35 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+	<meta name='format-detection' content='telephone=no'>
+	<link rel="stylesheet" type="text/css" href="./css/reset.css">
+	<title><%= nav %></title>
+</head>
+<body>
+	<div id='app' :style="{width:screen_width+'px'}" style='overflow: hidden'>
+		<% include include/header.ejs %>
+		<div :style="{width:double_screen_width+'px',transform:'translate3d('+position+'px,0px,0px)'}" style="transition-duration: .5s;">
+			<div class='container-wrap' :style="{width:screen_width+'px'}" style="float:left;">
+				<div class="container-scroll" style="top:0px;">
+					<% include include/index-top.ejs %>
+					<% include include/index-hot.ejs %>
+					<% include include/index-recommend.ejs %>
+
+					<% include include/index-female.ejs %>
+					<% include include/index-male.ejs %>
+
+					<% include include/index-free.ejs %>
+					<% include include/index-bottom.ejs %>
+				</div>
+			</div>
+			<div :style="{width:screen_width+'px'}" style="float:left;">
+				<% include include/index-shelf.ejs %>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="./script/vue.js"></script>
+	<script type="text/javascript" src="./script/zepto.js"></script>
+	<script type="text/javascript" src="./script/pages/index.js"></script>
+</body>
+</html>
