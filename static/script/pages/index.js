@@ -1,9 +1,9 @@
+//$.get()请求返回的数据是个字符串，所以需在后面加"json"条件，指明为json数据
 $.get('/ajax/index', function (d) {
 	var windowWidth = $(window).width();
 	if(windowWidth < 320) {
 		windowWidth = 320;
 	}
-	console.log(d);
 	var offset = $('.Swipe-tab').find('a').eq(0).offset();
 	var index_header_tab_width = offset.width;
 	new Vue({
@@ -46,4 +46,4 @@ $.get('/ajax/index', function (d) {
 			}
 		}
 	})
-})
+},'json');
