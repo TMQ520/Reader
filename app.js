@@ -13,7 +13,7 @@ const staticPath = './static';
 //将静态资源公布出来
 app.use(static(
 	path.join( __dirname, staticPath)
-))
+	))
 
 //加载模板引擎  挂载到ctx.render上
 app.use(views( path.join( __dirname, './view'), {
@@ -42,7 +42,38 @@ book.get('/', async ( ctx ) => {
 	if(!bookId) {
 		bookId="";
 	}
-	ctx.body = await ctx.render('book',{nav: '书籍详情', bookId: bookId});
+	//渲染book详情页
+	await ctx.render('book',{nav: '书籍详情', bookId: bookId});
+})
+
+//搜索页面view
+let search = new Router();
+search.get('/', async ( ctx ) => {
+	await ctx.render('search', {nav: '搜索页面'});
+})
+
+//分类页面view
+let category = new Router();
+category.get('/', async ( ctx ) => {
+	await ctx.render('category', {nav: "分类页面"});
+})
+
+//排行页面view
+let rank = new Router();
+rank.get('/', async ( ctx ) => {
+	await ctx.render('rank', {nav: "排行页面"});
+})
+
+//男频页面view
+let female = new Router();
+female.get('/', async ( ctx ) => {
+	await ctx.render('female', {nav: "女频页面"});
+})
+
+//女频页面view
+let male = new Router();
+male.get('/', async ( ctx ) => {
+	await ctx.render('male', {nav: "男频页面"});
 })
 //=====================-view_end-========================
 
@@ -61,9 +92,35 @@ homeApi.get('/index', async ( ctx ) => {
 	}
 	ctx.body = service.get_book_data(id);
 })
+.get('/search', async ( ctx ) => { //实现搜索API  通过ajax方式获取HTML数据
+	let params = ctx.query;
+	let start = params.start;
+	let end = params.end;
+	let keyword = params.keyword;
+	ctx.body = await service.get_search_data(start, end, keyword);
+})
+.get('/rank', async ( ctx) => { //实现排行API
+	ctx.body = await service.get_rank_data();
+})
+.get('/category', async ( ctx) => { //实现分类API
+	ctx.body = await service.get_category_data();
+})
+.get('/female', async ( ctx) => { //实现女频API
+	ctx.body = await service.get_female_data();
+})
+.get('/male', async ( ctx) => { //实现男频API
+	ctx.body = await service.get_male_data();
+})
 
 let router = new Router();
-router.use('/', home.routes()).use('/book',book.routes()).use('/ajax', homeApi.routes());
+router.use('/', home.routes())
+.use('/book',book.routes())
+.use('/search', search.routes())
+.use('/rank', rank.routes())
+.use('/category', category.routes())
+.use('/female', female.routes())
+.use('/male', male.routes())
+.use('/ajax', homeApi.routes())
 
 app.use(router.routes())
 
