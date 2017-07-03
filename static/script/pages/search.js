@@ -10,12 +10,10 @@ new Vue({
 			var keyword = $('#search_box').val();
 			var _this = this; //将Vue实例存起来
 			$.get('/ajax/search',{
-				keyword:keyword
+				keyword: keyword
 			},function(d){
 				_this.condition = false;
 				_this.search = d.items;
-				debugger;
-				console.log(d);
 				if(_this.search.length == 0){
 					_this.empty = true;
 				}else{

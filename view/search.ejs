@@ -39,19 +39,22 @@
 								<li v-for="item in search">
 									<div class="u-book">
 										<div class="cnt">
-											<div class="book-cover">
-												<img alt="{{ item.title }}" v-bind:src="item.cover">
-												<div class="u-tagRT"></div>
-											</div>
-											<div class="info">
-												<h3 class="title single-line">{{ item.title }}</h3>
-												<p class="summary">{{ item.intro }}</p>
-												<div class="wrap">
-													<p class="author single-line">
-														<span>{{ item.role[0][1] }}</span>
-													</p>
+											<a href="/book?id={{ item.source_id }}">
+												<div class="book-cover">
+													<img alt="{{ item.title }}" v-bind:src="item.cover">
+													<div class="u-tagRT"></div>
 												</div>
-											</div>
+												
+												<div class="info">
+													<h3 class="title single-line">{{ item.title }}</h3>
+													<p class="summary">{{ item.intro }}</p>
+													<div class="wrap">
+														<p class="author single-line">
+															<span>{{ item.role[0][1] }}</span>
+														</p>
+													</div>
+												</div>
+											</a>
 										</div>
 									</div>
 								</li>

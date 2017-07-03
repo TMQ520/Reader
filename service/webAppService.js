@@ -20,66 +20,106 @@ exports.get_book_data = function (id) {
 
 //获取排行数据
 exports.get_rank_data = function () {
-	var content = fs.readFileSync('./mock/rank.json', 'utf-8');
-	return content;
+	return new Promise(function ( resolve, reject) {
+		//异步读取数据 
+		fs.readFile('./mock/rank.json', 'utf-8', function (err, data) {
+			if( err ) return reject(err);
+
+			resolve(data);
+		});
+	});
 }
 
 
 //获取分类数据
 exports.get_category_data = function () {
-	var content = fs.readFileSync('./mock/category.json', 'utf-8');
-	return content;
+	return new Promise(function ( resolve, reject) {
+		//异步读取数据 
+		fs.readFile('./mock/category.json', 'utf-8', function (err, data) {
+			if( err ) return reject(err);
+
+			resolve(data);
+		});
+	});
 }
 
 
 //获取男频数据
 exports.get_male_data = function () {
-	var content = fs.readFileSync('./mock/channel/male.json', 'utf-8');
-	return content;
+	return new Promise(function ( resolve, reject) {
+		//异步读取数据 
+		fs.readFile('./mock/channel/male.json', 'utf-8', function (err, data) {
+			if( err ) return reject(err);
+
+			resolve(data);
+		});
+	});
 }
 
-//获取女频数据
+//获取女频数据   
 exports.get_female_data = function () {
-	var content = fs.readFileSync('./mock/channel/female.json', 'utf-8');
-	return content;
+	return new Promise(function ( resolve, reject) {
+		//异步读取数据 
+		fs.readFile('./mock/channel/female.json', 'utf-8', function (err, data) {
+			if( err ) return reject(err);
+
+			resolve(data);
+		});
+	});
 }
 
 
-//获取书籍详情页数据
+//获取文章详情页数据
+exports.get_chapter_data = function () {
+	return new Promise( function ( resolve, reject ) {
+		fs.readFile('./mock/reader/chapter.json', 'utf-8', function (err,data) {
+			if( err ) return reject(err);
+
+			resolve(data);
+		})
+	});
+};
+
+//获取文章内容数据
+exports.get_chapter_content_data = function (id) {
+	return new Promise( function ( resolve, reject ) {
+		fs.readFile('./mock/reader/data/data' + id + '.json', 'utf-8', function (err, data) {
+			if(err) return reject(err);
+
+			resolve(data);
+		})
+	});
+};
+
+//获取搜索数据
 exports.get_search_data = function (start, end, keyword) {
-	return function (cb) {
-		var http = require('http');
-		var qs = require('querystring');
-		var data = {
+	return new Promise (function (resolve, reject) {
+		let http = require('http');
+		let qs = require('querystring');
+		let data = {
+			s: keyword,
 			start: start,
-			end: end,
-			k: keyword
+			source: '2,5',
+			count: 10
 		};
-		var content = qs.stringify( data );
-		var http_request = {
-			hostname: 'dushu.xiaomi.com',
-			port: 80,
-			path: '/store/v0/lib/query/onebox?' + content,
-			method: 'GET'
-		};
+		let content = qs.stringify( data );
+		
+		http.get('http://dushu.xiaomi.com/store/v0/lib/query/onebox?' + content, function (res) {
+			var chunks = '';
 
-		//发送http请求
-		req_obj = http.request( http_request, function (_res) {
-			var callback_content = '';
-			var _this = this;
-			var content = '';
-			_res.setEncoding('utf-8');
+			res.setEncoding('utf-8');
 
-			_res.on('data', function (chunk) {
-				content += chunk;
+			res.on('data', function (chunk) {
+				chunks +=chunk;
 			});
 
-			_res.on('end', function (e) {
-				cb(null, content);
+			res.on('end', function () {
+				resolve(JSON.parse(chunks));
 			});
 
+		}).on('error', function (e) {
+			console.log("Got error:" + e.message);
 		});
 
-		req_obj.end();
-	}
+	});
 }

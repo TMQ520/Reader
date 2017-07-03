@@ -75,6 +75,18 @@ let male = new Router();
 male.get('/', async ( ctx ) => {
 	await ctx.render('male', {nav: "男频页面"});
 })
+
+//阅读页面view
+let reader = new Router();
+reader.get('/', async ( ctx ) => {
+	await ctx.render('reader', {nav: '阅读书籍'});
+})
+
+//目录view
+let catolog = new Router();
+catolog.get('/', async ( ctx ) => {
+	await ctx.render('catolog', {nav: '目录'});
+})
 //=====================-view_end-========================
 
 
@@ -99,17 +111,26 @@ homeApi.get('/index', async ( ctx ) => {
 	let keyword = params.keyword;
 	ctx.body = await service.get_search_data(start, end, keyword);
 })
-.get('/rank', async ( ctx) => { //实现排行API
+.get('/rank', async ( ctx ) => { //实现排行API
 	ctx.body = await service.get_rank_data();
 })
-.get('/category', async ( ctx) => { //实现分类API
+.get('/category', async ( ctx ) => { //实现分类API
 	ctx.body = await service.get_category_data();
 })
 .get('/female', async ( ctx) => { //实现女频API
 	ctx.body = await service.get_female_data();
 })
-.get('/male', async ( ctx) => { //实现男频API
+.get('/male', async ( ctx ) => { //实现男频API
 	ctx.body = await service.get_male_data();
+})
+.get('/chapter', async ( ctx ) => { //获取目录标题列表
+	ctx.body = await service.get_chapter_data();
+})
+.get('/chapter_data', async ( ctx ) => { //获取文章内容详情
+	let params = ctx.query;
+	let id = params.id;
+	if(!id) id = "";
+	ctx.body = await service.get_chapter_content_data(id);
 })
 
 let router = new Router();
@@ -120,6 +141,8 @@ router.use('/', home.routes())
 .use('/category', category.routes())
 .use('/female', female.routes())
 .use('/male', male.routes())
+.use('/chapter', catolog.routes())
+.use('/reader', reader.routes())
 .use('/ajax', homeApi.routes())
 
 app.use(router.routes())
