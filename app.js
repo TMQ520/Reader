@@ -13,7 +13,8 @@ const staticPath = './static';
 //将静态资源公布出来
 app.use(static(
 	path.join( __dirname, staticPath)
-	))
+	)
+)
 
 //加载模板引擎  挂载到ctx.render上
 app.use(views( path.join( __dirname, './view'), {
