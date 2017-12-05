@@ -5,6 +5,9 @@ $.get('/ajax/book?id=' + id, function (d) {
 	new Vue({
 		el: "#app",
 		data:d,
+		created: function() {
+			$('#init_loading').hide();
+		},
 		methods: {
 			readBook: function() {
 				location.href = '/reader'

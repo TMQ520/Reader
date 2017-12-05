@@ -414,7 +414,7 @@
 					font_container.css('transform','translate3d(0, -' + Dom.bottom_nav.height() + 'px,0)');
 				} else if(font_container_trasnlated3d[1] == '-70') { // 显示
 					font_button.removeClass('current');
-					font_container.css('transform','translate3d(0,' + font_container.height() + 'px,0)');
+					font_container.show().css('transform','translate3d(0,' + font_container.height() + 'px,0)');
 				}
 			});
 
@@ -425,8 +425,8 @@
 
 			//对屏幕的滚动监控
 			Win.scroll(function() {
-				Dom.top_nav.css('opacity', 0);
-				Dom.bottom_nav.css('opacity', 0);
+				Dom.top_nav.css('opacity', 0).hide();
+				Dom.bottom_nav.css('opacity', 0).hide();
 				font_container.css('transform','translate3d(0,' + font_container.height() + 'px,0)');
 				font_button.removeClass('current');
 			});
@@ -465,15 +465,15 @@
 			//屏幕中央事件
 			$('#action_mid').click(function() {
 				if (Dom.top_nav.css('opacity') == 0) {
-					Dom.top_nav.css('opacity', 1);
-					Dom.bottom_nav.css('opacity', 1);
+					Dom.top_nav.show().css('opacity', 1);
+					Dom.bottom_nav.show().css('opacity', 1);
 					// Dom.bottom_nav.show().removeClass('animated fadeOut').addClass('faseIn');
 					// Dom.top_nav.show().removeClass('animated fadeOut').addClass('faseIn');
 					// Dom.bottom_nav.show();
 					// Dom.top_nav.show();
 				} else {
-					Dom.top_nav.css('opacity', 0);
-					Dom.bottom_nav.css('opacity', 0);
+					Dom.top_nav.css('opacity', 0).hide();
+					Dom.bottom_nav.css('opacity', 0).hide();
 					// Dom.bottom_nav.hide().removeClass('animated fadeIn').addClass('faseOut');
 					// Dom.top_nav.hide().removeClass('animated fadeIn').addClass('faseOut');
 					// Dom.bottom_nav.hide();
