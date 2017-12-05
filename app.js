@@ -3,12 +3,29 @@ const Router = require('koa-router');
 const path = require('path');
 const views = require('koa-views');
 const static = require('koa-static');
-
+const proxy = require('koa-better-http-proxy');
 const app = new Koa();
 
 //静态资源路径
 const staticPath = './static';
 
+
+//实现代理
+// var proxyMiddleWare = require("http-proxy-middleware");
+
+var options = {
+  target: 'http://dushu.xiaomi.com', // target host
+  changeOrigin: true,               // needed for virtual hosted sites    // proxy websockets
+  // rewrite: {
+  //   '^/apis' : '',    // rewrite path
+  // },
+  // remoteAddress:'101.227.139.217:443'//可能没有用
+};
+
+
+// var exampleProxy = proxyMiddleWare(options);
+
+app.use('/apis',proxy('http://dushu.xiaomi.com'));//当请求已apis开头的路径时，会自动跳转到相应的qq路径
 
 //将静态资源公布出来
 app.use(static(

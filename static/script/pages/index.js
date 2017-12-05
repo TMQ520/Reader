@@ -1,4 +1,18 @@
 //$.get()请求返回的数据是个字符串，所以需在后面加"json"条件，指明为json数据
+// 书城首页接口
+$.ajax({
+	url: 'apis/hs/v3/channel/418',
+	type:'get',
+	dataType: 'JSON',
+	success:function(res) {
+		if(res.result == 0) {
+			csonole.log(res);
+		}
+	},
+	error:function(err){
+		// console.log(err);
+	}
+})
 $.get('/ajax/index', function (d) {
 	var windowWidth = $(window).width();
 	if(windowWidth < 320) {
