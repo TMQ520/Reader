@@ -1,4 +1,4 @@
-$.get('/ajax/male',function (d) {
+$.get('/ajax/males',function (d) {
 	var windowWidth = $(document.body).width();
 	if(windowWidth < 320) {
 		windowWidth = 320;

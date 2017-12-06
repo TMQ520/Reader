@@ -1,4 +1,4 @@
-$.get('/ajax/category',function (d) {
+$.get('/ajax/categorys',function (d) {
 	var windowWidth = $(document.body).width();
 	if(windowWidth < 320) {
 		windowWidth = 320;

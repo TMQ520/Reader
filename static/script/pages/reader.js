@@ -15,8 +15,9 @@
 				cache : true,
 				callback : "duokan_fiction_chapter",
 				success : function(result) {
-					//debugger;//调试是否解密成功
+					// 解密
 					var data = $.base64.decode(result);
+					// 编码
 					var json = decodeURIComponent(escape(data));
 					callback(json);
 				}
@@ -35,9 +36,9 @@
 	function ReaderModel(id_, cid_, onChange_) {
 		var Title = "";
 
-		var Fiction_id = id_;
+		var Fiction_id = id_; // 书籍id
 
-		var Chapter_id = cid_;
+		var Chapter_id = cid_; // 章节id
 
 		if (Util.StorageGetter(Fiction_id + 'last_chapter')) {
 			Chapter_id = Util.StorageGetter(Fiction_id + 'last_chapter');
@@ -57,12 +58,12 @@
 			 gotoChapter(Chapter_id);
 			 });
 			 */
-			};
+		};
 
-			var gotoChapter = function(chapter_id) {
-				Chapter_id = chapter_id;
-				getCurChapterContent();
-			};
+		var gotoChapter = function(chapter_id) {
+			Chapter_id = chapter_id;
+			getCurChapterContent();
+		};
 
 		//获得当前章节内容
 		var getCurChapterContent = function() {
@@ -180,7 +181,8 @@
 		// 获取fiction_id 和 chapter_id
 		var RootContainer = $('#fiction_container');
 
-		var Fiction_id, Chapter_id;
+		var Fiction_id, // 书籍id
+			 Chapter_id; // 章节id
 
 		// 绑定事件
 		var ScrollLock = false;

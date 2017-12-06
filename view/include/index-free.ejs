@@ -78,7 +78,7 @@
 	</div>
 	<ul class="book-table">
 		<li v-for="item in free">
-			<a href="/book?id={{ item.fiction_id }}">
+			<a href="/book?id={{ item.data.fiction_id }}">
 				<div class="u-book -vertical">
 					<div class="book-cover">
 						<img v-bind:src="item.data.cover" alt="{{ item.ad_name }}">

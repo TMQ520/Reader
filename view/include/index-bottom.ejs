@@ -39,7 +39,12 @@
 	</div>
 	<ul class="banner-h5__list">
 		<div>
-			<li>
+			<li v-for="item in topic">
+				<div class="banner-h5__cover">
+					<img :src="item.ad_pic_url" class="cover">
+				</div>
+			</li>
+			<!-- <li>
 				<div class="banner-h5__cover">
 					<img src="http://image.read.duokan.com/mfsv2/download/fdsc3/p01JgiKpfnDB/MZzw0tsiPf5V5b.jpg" class="cover">
 				</div>
@@ -48,7 +53,7 @@
 				<div class="banner-h5__cover">
 					<img src="http://image.read.duokan.com/mfsv2/download/fdsc3/p016ciKYVyiG/1T9mMBl6OK4myZ.jpg" class="cover">
 				</div>
-			</li>
+			</li> -->
 		</div>
 	</ul>
 	<div class="channel-h5__footer">

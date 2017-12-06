@@ -1,3 +1,20 @@
+.loading-icon {
+    margin: 0 auto;
+    margin-top: 50%;
+    background: url(data:image/gif;base64,R0lGODlhGAAYAIAAAK2trTE6QiH/C05FVFNDQVBFMi4wAwEAAAAh+QQFDwABACwDAAkAEgAGAAACFIQReah7GRZ0r5lJWayb4ms5n7YUACH5BAkPAAEALAIABwATAAoAAAIbhB+pq4cMwwMR0lbZTTvL1WVdWI1e45BRqkIFACH5BAkPAAEALAMABwASAAoAAAIdjA+px63r4EtmylktyI/jYHkd+GkbOY5M2LQsUwAAIfkECQ8AAQAsAwAIABMACAAAAhqMjwfLrWyaBG/FCa8NOPPcbd8WUpo5Jeq5FAA7);
+    width: 20px;
+    height: 20px;
+}
+.loading-mask {
+    text-align: center;
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    opacity: 0.5;
+    position: fixed;
+    top: 0px;
+}   
 .Swipe,
 .Swipe-tab {
     position: relative;
@@ -274,11 +291,11 @@ input{
 
 
 html{width:100%;height: 100% ;overflow-x:hidden;font-size: 10px;}
-body{background:rgba(255, 255, 255, 0);position:relative;text-align:left;width:100%;height:100%;-webkit-tap-highlight-color: rgba(0,0,0,0.05);-webkit-touch-callout:none;-webkit-user-select:none;}
+body{background:rgba(255, 255, 255, 0);position:relative;text-align:left;width:100%;height:100%;-webkit-tap-highlight-color: rgba(0,0,0,0.05); -webkit-touch-callout:none;-webkit-user-select:none; }
 
 body{
     -webkit-overflow-scrolling: touch;
-}
+} 
 
 .g-bd{padding:10px;}
 .g-pft{position:fixed;width:100%;z-index:10;bottom: 0;}
@@ -527,7 +544,7 @@ body{
 .u-price b{font-weight: normal; color: #ff7800;  font-size: 16px; margin-right: 4px;}
 
 
-.u-book { position : relative; overflow: hidden;}
+.u-book { position : relative; overflow: hidden; padding: 13px 14px;}
 .u-book .cnt:after{clear:both;content:'.';display:block;height:0;overflow:hidden;visibility:hidden;}
 .u-book .book-cover{float: left;margin-right: 10px;}
 .u-book .info{padding-top: 1.2rem;}
@@ -1295,7 +1312,7 @@ _filter:none;
 
 .u-cat-item{width:100%;height:66px;padding:21px 6px 0;background-color:#eee;background-size:100%;background-position:right bottom;background-repeat:no-repeat;color:#515151;-webkit-box-sizing:border-box;}
 .u-cat-item h3{font-size:13px;line-height:16px;}
-.u-cat-item .num{font-size:11px;line-height:1em;color:#999;}
+.u-cat-item .num{font-size:11px;line-height:1em;color:#999;margin-top: 5px;}
 
 .m-cat-best img {
     margin-top: 2%;

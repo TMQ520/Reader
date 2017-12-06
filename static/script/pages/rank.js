@@ -1,4 +1,4 @@
-$.get('/ajax/rank',function (d) {
+$.get('/ajax/ranks',function (d) {
 	var windowWidth = $(document.body).width();
 	if(windowWidth < 320) {
 		windowWidth = 320;

@@ -5,6 +5,7 @@ const views = require('koa-views');
 const static = require('koa-static');
 const proxy = require('koa-better-http-proxy');
 const app = new Koa();
+var axios = require('axios');
 
 //静态资源路径
 const staticPath = './static';
@@ -25,7 +26,8 @@ var options = {
 
 // var exampleProxy = proxyMiddleWare(options);
 
-app.use('/apis',proxy('http://dushu.xiaomi.com'));//当请求已apis开头的路径时，会自动跳转到相应的qq路径
+//app.use('/apis',proxy('http://dushu.xiaomi.com'));//当请求已apis开头的路径时，会自动跳转到相应的qq路径
+
 
 //将静态资源公布出来
 app.use(static(
@@ -75,6 +77,10 @@ let category = new Router();
 category.get('/', async ( ctx ) => {
 	await ctx.render('category', {nav: "分类页面"});
 })
+.get('/details', async ( ctx ) => {
+	let navContent = ctx.query.nav || '分类详情页面';
+	await ctx.render('category-details', {nav: navContent});
+})
 
 //排行页面view
 let rank = new Router();
@@ -107,12 +113,28 @@ catolog.get('/', async ( ctx ) => {
 })
 //=====================-view_end-========================
 
+// 封装请求方法
+const headers = {
+	referer:'http://dushu.xiaomi.com/',
+	host: 'dushu.xiaomi.com'
+}
 
-
+const commonUrl = 'http://dushu.xiaomi.com'; // 定义全局变量
 //实现 首页API
 let homeApi = new Router();
 homeApi.get('/index', async ( ctx ) => {
 	ctx.body = service.get_index_data();
+})
+.get('/indexs', async ( ctx ) => {
+	var url = commonUrl + '/hs/v3/channel/418';
+	await axios.get(url,{
+		headers: headers
+	}).then((res) => {
+		// console.log(res.data)
+		ctx.body = res.data;
+	}).catch((e) => {
+	    console.log(e)
+	})
 })
 .get('/book', async ( ctx ) => {//实现书籍API  根据id去取
 	let params = ctx.query;
@@ -121,6 +143,22 @@ homeApi.get('/index', async ( ctx ) => {
 		id = ""; //如果没有传id，则赋为空
 	}
 	ctx.body = service.get_book_data(id);
+})
+.get('/books',async ( ctx ) => {
+	let params = ctx.query;
+	let id = params.id;
+	if(!id) {
+		id = ""; //如果没有传id，则赋为空
+	}
+	let url = commonUrl + '/hs/v0/android/fiction/book/' + id;
+	await axios.get(url,{
+		headers: headers
+	}).then((res) => {
+		// console.log(res.data)
+		ctx.body = res.data;
+	}).catch((e) => {
+	    console.log(e)
+	})
 })
 .get('/search', async ( ctx ) => { //实现搜索API  通过ajax方式获取HTML数据
 	let params = ctx.query;
@@ -132,14 +170,68 @@ homeApi.get('/index', async ( ctx ) => {
 .get('/rank', async ( ctx ) => { //实现排行API
 	ctx.body = await service.get_rank_data();
 })
+.get('/ranks', async ( ctx ) => {
+	var url = commonUrl + '/store/v0/ad/ranks';
+	await axios.get(url,{
+		headers: headers
+	}).then((res) => {
+		// console.log(res.data)
+		ctx.body = res.data;
+	}).catch((e) => {
+	    console.log(e)
+	})
+})
 .get('/category', async ( ctx ) => { //实现分类API
 	ctx.body = await service.get_category_data();
+})
+.get('/categorys', async ( ctx ) => {
+	var url = commonUrl + '/hs/v0/android/store/category';
+	await axios.get(url,{
+		headers: headers
+	}).then((res) => {
+		ctx.body = res.data;
+	}).catch((e) => {
+	    console.log(e)
+	})
+})
+.get('/cateDetails',async ( ctx ) => { // 获取分类详情页面接口
+	let params = ctx.query;
+	var url = commonUrl + '/store/v0/fiction/category/' + params.id + '?start='+ params.start +'&count='+ params.count +'&click='+ params.click;
+	await axios.get(url,{
+		headers: headers
+	}).then((res) => {
+		ctx.body = res.data;
+	}).catch((e) => {
+	    console.log(e)
+	})
 })
 .get('/female', async ( ctx) => { //实现女频API
 	ctx.body = await service.get_female_data();
 })
+.get('/females', async ( ctx ) => {
+	var url = commonUrl + '/hs/v3/channel/370';
+	await axios.get(url,{
+		headers: headers
+	}).then((res) => {
+		// console.log(res.data)
+		ctx.body = res.data;
+	}).catch((e) => {
+	    console.log(e)
+	})
+})
 .get('/male', async ( ctx ) => { //实现男频API
 	ctx.body = await service.get_male_data();
+})
+.get('/males', async ( ctx ) => {
+	var url = commonUrl + '/hs/v3/channel/369';
+	await axios.get(url,{
+		headers: headers
+	}).then((res) => {
+		// console.log(res.data)
+		ctx.body = res.data;
+	}).catch((e) => {
+	    console.log(e)
+	})
 })
 .get('/chapter', async ( ctx ) => { //获取目录标题列表
 	ctx.body = await service.get_chapter_data();
