@@ -189,15 +189,14 @@
 
 		.bottom-nav {
 			position: fixed;
-			bottom: 0px;
-			height: 70px;
-			background: none;
-			width: 100%;
-			/*opacity: 1;*/
-			transition: all 0.4s;
-			z-index: 10004;
-			margin: 0 auto;
-			text-align: center
+		    bottom: 0px;
+		    background: rgba(0,0,0,.9);
+		    width: 100%;
+		    transition: all 0.4s;
+		    -webkit-transition: all 0.4s;
+		    z-index: 10004;
+		    margin: 0 auto;
+		    text-align: center;
 		}
 		.bottom-nav .item {
 			display: inline-block;
@@ -205,6 +204,8 @@
 			color: #fff;
 			text-align: center;
 			margin: 0 auto;
+			height: 70px;
+    		line-height: 21px;
 		}
 
 		.m-button-bar {
@@ -287,8 +288,8 @@
 			position: fixed;
 			text-align: center;
 			width: 100%;
-			top: 40%;
-			color: #fff;
+			bottom: 0;
+    		color: #999;
 			z-index: 199999
 		}
 		.u-tab {
@@ -396,6 +397,7 @@
 			width: 26px;
 			margin: 0 auto;
 			position: relative;
+			top: 21px;
 		}
 		.loading-icon {
 			margin: 0 auto;
@@ -461,6 +463,23 @@
 			height: 266px;
 			z-index: 39999
 		}
+		.reader__ft-bar {
+		    overflow: hidden;
+		    border-bottom: 1px solid #333;
+		}
+		.reader__ft-bar a {
+		    float: left;
+		    display: block;
+		    width: 25%;
+		    font-size: 13px;
+		    line-height: 48px;
+		    height: 48px;
+		    color: #fff;
+		    text-align: center;
+		}
+		.reader__ft-bar a:nth-child(2) {
+		    width: 50%;
+		}
 	</style>
 </head>
 <body>
@@ -496,7 +515,7 @@
 				<span>背景</span>
 			</div>
 		</div>
-		<div class="m-button-bar" id="bottom_tool_bar" style="display:none;padding-bottom:70px;">
+		<!-- <div class="m-button-bar" id="bottom_tool_bar" style="display:none;padding-bottom:70px;">
 			<ul class="u-tab" id="bottom_tool_bar_ul">
 				<li id="prev_button" >
 					上一章
@@ -505,11 +524,16 @@
 					下一章
 				</li>
 			</ul>
-		</div>
+		</div> -->
 
-		<div class="bottom-nav-bk bottom_nav" style="opacity: 0"></div>
+		<!-- <div class="bottom-nav-bk bottom_nav" style="opacity: 0"></div> -->
 
 		<div class="bottom-nav bottom_nav" style="opacity: 0">
+			<div class="reader__ft-bar">
+				<a href="javascript:" class="reader__prev-chapter" id='prevchapter'>上一章</a>
+				<a href="javascript:" id="Tag__pro">1/3106</a>
+				<a href="javascript:" class="reader__next-chapter" id='nextchapter'>下一章</a>
+			</div>
 			<div class="item menu-button" id="menu_button">
 				<div class="item-warp">
 					<div class="icon-menu"></div>

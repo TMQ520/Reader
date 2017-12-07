@@ -43,14 +43,21 @@ $.ajax({
 				el: '#app_chapter',
 				data: {
 					screen_width: windowWidth,
-					double_screen_width: windowWidth*2,
+					double_screen_width: windowWidth * 2,
 					item: res.item,
 					chapter_id: params.chapter_id
+				},
+				created:function(){
+					$('#init_loading').hide();
+				},
+				methods:{
+					gotoChapter: function(chapter_id) {
+						localStorage.setItem('ficiton_reader_'+ params.fiction_id +'_last_chapter',chapter_id);
+						location.href = '/reader?fiction_id=' + params.fiction_id + '&chapter_id=' + chapter_id;
+					}
 				}
-			})
-			resolve(Chapters);
+			});
 		} else {
-			reject(res);
 		}
 	},
 	error: function (e) {

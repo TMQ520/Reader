@@ -41,15 +41,15 @@
 
 		var Chapter_id = cid_; // 章节id
 
-
+		var toc; // 存放章节数目
 		// 
-		if (Util.StorageGetter(Fiction_id + '_last_chapter')) {
+		/*if (Util.StorageGetter(Fiction_id + '_last_chapter')) {
 			Chapter_id = Util.StorageGetter(Fiction_id + '_last_chapter');
-		}
+		}*/
 
-		if (!Chapter_id) {
+		/*if (!Chapter_id) {
 			Chapter_id = 1;
-		}
+		}*/
 		var Chapters = []; // 存放章节内容(全局)
 
 		var init = function() {
@@ -65,7 +65,6 @@
 
 		//获得当前章节内容
 		var getCurChapterContent = function() {
-
 			$.get("/ajax/chapter_datas",{
 				fiction_id : Fiction_id,
 				chapter_id : Chapter_id
@@ -75,13 +74,13 @@
 					Util.getJSONP(url, function(data) {
 						setTimeout(function(){
 							$('#init_loading').hide();
+							$('#Tag__pro').html((Chapter_id+1) + '/' + toc.length);
 						},500);
 						onChange_ && onChange_(data);
 					});
 				}
 			}, 'json');
 			return;
-
 		};
 
 		// 获取章节详细信息 返回Promise
@@ -95,8 +94,9 @@
 				dataType: 'json',
 				success: function(res) {
 					if (res.result == 0) {
-						var toc = res.item.toc;
+						toc = res.item.toc;
 						$('#nav_title').html('返回');
+						$('#Tag__pro').html((Chapter_id+1) + '/' + toc.length);
 						for (var i = 0; i < toc.length; i++) {
 							Chapters.push({
 								"chapter_id" : toc[i].chapter_id,
@@ -177,14 +177,14 @@
 		// 获取fiction_id 和 chapter_id
 		var RootContainer = $('#fiction_container');
 		var params = {
-			fiction_id: getUrlStr('fiction_id'),
-			chapter_id: getUrlStr('chapter_id')
+			fiction_id: parseInt(getUrlStr('fiction_id')),
+			chapter_id: parseInt(getUrlStr('chapter_id'))
 		}
 		if(!params.fiction_id){
 			history.back(); // 回退到上一级
 		}
 		var Fiction_id = params.fiction_id, // 全局书籍id
-			 Chapter_id = params.chapter_id; // 全局章节id
+			 Chapter_id = params.chapter_id || Util.StorageGetter(Fiction_id + '_last_chapter'); // 全局章节id
 
 		// 绑定事件
 		var ScrollLock = false;
@@ -204,11 +204,12 @@
 			nav_title : $('#nav_title'),
 			bk_container : $('#bk-container'),
 			night_button : $('#night-button'),
-			next_button : $('#next_button'),
-			prev_button : $('#prev_button'),
+			next_button : $('#nextchapter'),
+			prev_button : $('#prevchapter'),
 			back_button : $('#back_button'),
 			top_nav : $('#top-nav'),
-			bottom_nav : $('.bottom_nav')
+			bottom_nav : $('.bottom_nav'),
+			progress: $('#Tag__pro')
 		}
 
 		// 程序初始化
@@ -412,11 +413,11 @@
 				// 获取字体容器的transform值
 				var font_container_trasnlated3d = font_container.css('transform').replace(/[^0-9\-,]/g,'').split(',');
 				
-				if (font_container_trasnlated3d[1] == '135') { // 隐藏
+				if (font_container_trasnlated3d[1] <= font_container.height() && font_container_trasnlated3d[1] > 0) { // 隐藏
 					console.log(font_container_trasnlated3d[1])
 					font_button.addClass('current');
 					font_container.css('transform','translate3d(0, -' + Dom.bottom_nav.height() + 'px,0)');
-				} else if(font_container_trasnlated3d[1] == '-70') { // 显示
+				} else if(font_container_trasnlated3d[1] < 0 ) { // 显示
 					font_button.removeClass('current');
 					font_container.show().css('transform','translate3d(0,' + font_container.height() + 'px,0)');
 				}
@@ -433,6 +434,23 @@
 				Dom.bottom_nav.css('opacity', 0).hide();
 				font_container.css('transform','translate3d(0,' + font_container.height() + 'px,0)');
 				font_button.removeClass('current');
+
+				// 监听是否滚到底部
+				/*console.log('windowHeight: ' + windowHeight())
+					console.log('scrollTop: ' + scroll().top)
+					console.log('documentHeight: ' + documentHeight())*/
+				if(scroll().top + windowHeight() >= (documentHeight() - 50)) {
+					// 当加载到离底部只差一点距离时,
+					//请求新的数据
+					// console.log('windowHeight: ' + windowHeight())
+					// console.log('scrollTop: ' + scroll().top)
+					// console.log('documentHeight: ' + documentHeight())
+					console.log('正在加载中...')
+					if(!ScrollLock) {
+						ScrollLock = true;
+						readerModel.next();
+					}
+				}
 			});
 
 			//章节翻页

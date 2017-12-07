@@ -43,32 +43,32 @@
 </style>
 </head>
 <body>
-	<div >
-		<div class="Swipe Swipe_full Destructor" id="app_chapter">
+	<div class="loading-mask" id="init_loading" style='z-index: 2;'>
+		<div class="loading-icon"></div>
+	</div>
+	<div class="Swipe Swipe_full Destructor" id="app_chapter">
+		<div :style="{width: screen_width + 'px'}">
 			<div :style="{width: screen_width + 'px'}">
-				<div :style="{width: screen_width + 'px'}">
-					<div class="top" >
-						<a class="top_back" :href="'/reader?fiction_id='+ item.fiction_id +'&chapter_id='+ chapter_id"></a>
-						<span class="top_title"><%=nav%></span>
-						<a class="header-home" href="/"></a>
-					</div>
+				<div class="top" >
+					<a class="top_back" :href="'/reader?fiction_id='+ item.fiction_id +'&chapter_id='+ chapter_id"></a>
+					<span class="top_title"><%=nav%></span>
+					<a class="header-home" href="/"></a>
+				</div>
 
-					<div class="Swipe Swipe_full container-scroll Destructor">
-						<div :style="{width: double_screen_width + 'px'}">
-							<div :style="{width: screen_width + 'px'}">
-								<div class="new-page channel-page" >
-									<section class="channel-group main-card" v-for="section in item.toc">
-										{{$index}}
-										<a href="'/reader?fiction_id='+ item.fiction_id + '&chapter_id='+ $index">
-											<div class="channel-group_header">
-												<h2 class="channel-group_title channel-group_title_left">{{section.title}}</h2>
-											</div>
-										</a>
-									</section>
-								</div>
+				<div class="Swipe Swipe_full container-scroll Destructor">
+					<div :style="{width: double_screen_width + 'px'}">
+						<div :style="{width: screen_width + 'px'}">
+							<div class="new-page channel-page" >
+								<section class="channel-group main-card" v-for="section in item.toc">
+									<a @click='gotoChapter($index)' v-cloak>
+										<div class="channel-group_header" v-cloak>
+											<h2 class="channel-group_title channel-group_title_left">{{section.title}}</h2>
+										</div>
+									</a>
+								</section>
 							</div>
-
 						</div>
+
 					</div>
 				</div>
 			</div>
