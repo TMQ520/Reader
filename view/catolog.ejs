@@ -58,7 +58,8 @@
 							<div :style="{width: screen_width + 'px'}">
 								<div class="new-page channel-page" >
 									<section class="channel-group main-card" v-for="section in item.toc">
-										<a href="'/reader?fiction_id='+ item.fiction_id +'&chapter_id='+ $index">
+										{{$index}}
+										<a href="'/reader?fiction_id='+ item.fiction_id + '&chapter_id='+ $index">
 											<div class="channel-group_header">
 												<h2 class="channel-group_title channel-group_title_left">{{section.title}}</h2>
 											</div>

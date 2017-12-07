@@ -44,7 +44,7 @@ $.ajax({
 				data: {
 					screen_width: windowWidth,
 					double_screen_width: windowWidth*2,
-					item: d.item,
+					item: res.item,
 					chapter_id: params.chapter_id
 				}
 			})
