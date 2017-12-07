@@ -240,7 +240,8 @@
 							</p>
 
 							<p class="count" v-cloak>字数:{{ item.word_count }}字
-								<span class="u-booktag -serial">连载中</span>
+								<span class="u-booktag -serial" v-if='item.finish == false'>连载中</span>
+								<span class="u-booktag -serial" v-if='item.finish'>已完结</span>
 							</p>
 						</div>
 					</div>
@@ -256,11 +257,11 @@
 						</div>
 					</div>
 					<div class="u-folder">
-						<div class="floder-cnt" v-cloak>
+						<div class="floder-cnt" style="padding: 8px 15px;" v-cloak>
 							{{ item.summary }}
 						</div>
 						<div class="folder-tail" v-cloak>
-							<div>最新：{{ item.latest }}</div>
+							<div style="padding: 10px;">最新：{{ item.latest }}</div>
 						</div>
 					</div>
 				</section>

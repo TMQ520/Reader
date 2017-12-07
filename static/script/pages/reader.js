@@ -32,46 +32,46 @@
 		}
 	})();
 
+	
+
 	//获得阅读器内容的方法
 	function ReaderModel(id_, cid_, onChange_) {
-		var Title = "";
 
 		var Fiction_id = id_; // 书籍id
 
 		var Chapter_id = cid_; // 章节id
 
-		if (Util.StorageGetter(Fiction_id + 'last_chapter')) {
-			Chapter_id = Util.StorageGetter(Fiction_id + 'last_chapter');
+
+		// 
+		if (Util.StorageGetter(Fiction_id + '_last_chapter')) {
+			Chapter_id = Util.StorageGetter(Fiction_id + '_last_chapter');
 		}
 
 		if (!Chapter_id) {
 			Chapter_id = 1;
 		}
-		var Chapters = [];
+		var Chapters = []; // 存放章节内容(全局)
 
 		var init = function() {
 			getFictionInfoPromise.then(function(d) {
 				gotoChapter(Chapter_id);
 			});
-			/*
-			 getFictionInfo(function() {
-			 gotoChapter(Chapter_id);
-			 });
-			 */
 		};
 
 		var gotoChapter = function(chapter_id) {
 			Chapter_id = chapter_id;
-			getCurChapterContent();
-		};
+			getCurChapterContent()
+		}
 
 		//获得当前章节内容
 		var getCurChapterContent = function() {
-			$.get("/ajax/chapter_data",{
-				id : Chapter_id
+
+			$.get("/ajax/chapter_datas",{
+				fiction_id : Fiction_id,
+				chapter_id : Chapter_id
 			}, function(data) {
 				if (data.result == 0) {
-					var url = data.jsonp;
+					var url = data.url;
 					Util.getJSONP(url, function(data) {
 						setTimeout(function(){
 							$('#init_loading').hide();
@@ -86,41 +86,35 @@
 
 		// 获取章节详细信息 返回Promise
 		var getFictionInfoPromise = new Promise(function(resolve, reject) {
-			$.get("/ajax/chapter", function(data) {
-				if (data.result == 0) {
-					Title = data.title;
-					$('#nav_title').html('返回');
-					window.ChaptersData = data.chapters;
-					window.chapter_data = data.chapters;
-					for (var i = 0; i < data.chapters.length; i++) {
-						Chapters.push({
-							"chapter_id" : data.chapters[i].chapter_id,
-							"title" : data.chapters[i].title
-						})
+			$.ajax({
+				url: '/ajax/chapters',
+				type:'get',
+				data:{
+					fiction_id : Fiction_id
+				},
+				dataType: 'json',
+				success: function(res) {
+					if (res.result == 0) {
+						var toc = res.item.toc;
+						$('#nav_title').html('返回');
+						for (var i = 0; i < toc.length; i++) {
+							Chapters.push({
+								"chapter_id" : toc[i].chapter_id,
+								"title" : toc[i].title
+							})
+						}
+						resolve(Chapters);
+					} else {
+						reject(res);
 					}
-					resolve(Chapters);
-				} else {
-					reject(data);
-				}
-			}, 'json');
-		});
+				},
+				error: function (e) {
 
-		var getFictionInfo = function(callback) {
-			$.get("/data/chapter.json", function(data) {
-				Title = data.title;
-				$('#nav_title').html('返回书架');
-				window.ChaptersData = data.chapters;
-				window.chapter_data = data.chapters;
-				for (var i = 0; i < data.chapters.length; i++) {
-					Chapters.push({
-						"chapter_id" : data.chapters[i].chapter_id,
-						"title" : data.chapters[i].title
-					})
 				}
-				callback && callback();
-			}, 'json');
-		};
-		
+			});
+		})
+
+
 		//获得上一章内容
 		var prevChapter = function() {
 			$('#init_loading').show();
@@ -128,9 +122,10 @@
 			if (Chapter_id == 0) {
 				return
 			}
-			var cid = Chapter_id - 1;
-			gotoChapter(cid);
-			Util.StorageSetter(Fiction_id + 'last_chapter', Chapter_id);
+			Chapter_id--;
+			gotoChapter(Chapter_id);
+			// 设置已读的章节id
+			Util.StorageSetter(Fiction_id + '_last_chapter', Chapter_id);
 		};
 
 		//获得下一章内容
@@ -140,9 +135,10 @@
 			if (Chapter_id == Chapters.length - 1) {
 				return
 			}
-			var cid = Chapter_id + 1;
-			gotoChapter(cid);
-			Util.StorageSetter(Fiction_id + 'last_chapter', Chapter_id);
+			Chapter_id++;
+			gotoChapter(Chapter_id);
+			// 设置已读的章节id
+			Util.StorageSetter(Fiction_id + '_last_chapter', Chapter_id);
 		};
 
 		return {
@@ -180,9 +176,15 @@
 
 		// 获取fiction_id 和 chapter_id
 		var RootContainer = $('#fiction_container');
-
-		var Fiction_id, // 书籍id
-			 Chapter_id; // 章节id
+		var params = {
+			fiction_id: getUrlStr('fiction_id'),
+			chapter_id: getUrlStr('chapter_id')
+		}
+		if(!params.fiction_id){
+			history.back(); // 回退到上一级
+		}
+		var Fiction_id = params.fiction_id, // 全局书籍id
+			 Chapter_id = params.chapter_id; // 全局章节id
 
 		// 绑定事件
 		var ScrollLock = false;
@@ -461,7 +463,7 @@
 
 			//跳转目录
 			$('#menu_button').click(function() {
-				location.href = '/chapter';//跳转到目录页面
+				location.href = '/chapter?fiction_id='+ Fiction_id +'&chapter_id=' + Chapter_id;//跳转到目录页面
 			});
 
 			//屏幕中央事件

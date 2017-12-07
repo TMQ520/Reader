@@ -7,6 +7,9 @@ const proxy = require('koa-better-http-proxy');
 const app = new Koa();
 var axios = require('axios');
 
+// 设置全局的axios配置
+// axios.defaults.withCredentials = true;
+
 //静态资源路径
 const staticPath = './static';
 
@@ -116,7 +119,8 @@ catolog.get('/', async ( ctx ) => {
 // 封装请求方法
 const headers = {
 	referer:'http://dushu.xiaomi.com/',
-	host: 'dushu.xiaomi.com'
+	host: 'dushu.xiaomi.com',
+	Cookie: 'app_id=web; build=8888; device_hash=5528999bb9b7cae495ff68a2792b9c81; device_id=D950J4F3ND9OIM4O; user_type=2'
 }
 
 const commonUrl = 'http://dushu.xiaomi.com'; // 定义全局变量
@@ -133,7 +137,7 @@ homeApi.get('/index', async ( ctx ) => {
 		// console.log(res.data)
 		ctx.body = res.data;
 	}).catch((e) => {
-	    console.log(e)
+		console.log(e)
 	})
 })
 .get('/book', async ( ctx ) => {//实现书籍API  根据id去取
@@ -157,7 +161,7 @@ homeApi.get('/index', async ( ctx ) => {
 		// console.log(res.data)
 		ctx.body = res.data;
 	}).catch((e) => {
-	    console.log(e)
+		console.log(e)
 	})
 })
 .get('/search', async ( ctx ) => { //实现搜索API  通过ajax方式获取HTML数据
@@ -178,7 +182,7 @@ homeApi.get('/index', async ( ctx ) => {
 		// console.log(res.data)
 		ctx.body = res.data;
 	}).catch((e) => {
-	    console.log(e)
+		console.log(e)
 	})
 })
 .get('/category', async ( ctx ) => { //实现分类API
@@ -191,18 +195,24 @@ homeApi.get('/index', async ( ctx ) => {
 	}).then((res) => {
 		ctx.body = res.data;
 	}).catch((e) => {
-	    console.log(e)
+		console.log(e)
 	})
 })
 .get('/cateDetails',async ( ctx ) => { // 获取分类详情页面接口
 	let params = ctx.query;
-	var url = commonUrl + '/store/v0/fiction/category/' + params.id + '?start='+ params.start +'&count='+ params.count +'&click='+ params.click;
+	// var url = commonUrl + '/store/v0/fiction/category/' + params.id + '?start='+ params.start +'&count='+ params.count +'&click='+ params.click;
+	var url = commonUrl + '/store/v0/fiction/category/' + params.id;
 	await axios.get(url,{
-		headers: headers
+		headers: headers,
+		params: {
+			start: params.start,
+			count: params.count,
+			click: params.click
+		}
 	}).then((res) => {
 		ctx.body = res.data;
 	}).catch((e) => {
-	    console.log(e)
+		console.log(e)
 	})
 })
 .get('/female', async ( ctx) => { //实现女频API
@@ -216,7 +226,7 @@ homeApi.get('/index', async ( ctx ) => {
 		// console.log(res.data)
 		ctx.body = res.data;
 	}).catch((e) => {
-	    console.log(e)
+		console.log(e)
 	})
 })
 .get('/male', async ( ctx ) => { //实现男频API
@@ -230,17 +240,50 @@ homeApi.get('/index', async ( ctx ) => {
 		// console.log(res.data)
 		ctx.body = res.data;
 	}).catch((e) => {
-	    console.log(e)
+		console.log(e)
 	})
 })
 .get('/chapter', async ( ctx ) => { //获取目录标题列表
 	ctx.body = await service.get_chapter_data();
+})
+.get('/chapters', async ( ctx ) => {
+	let params = ctx.query;
+	let url = commonUrl + '/store/v0/fiction/detail/'+ params.fiction_id;
+	await axios.get(url,{
+		headers: headers,
+		// params: {
+		// 	// fiction_id: params.fiction_id,
+		// 	chapter_id: params.chapter_id,
+		// 	// format: 'jsonp'
+		// }
+	}).then((res) => {
+		ctx.body = res.data;
+	}).catch((e) => {
+		console.log(e);
+	})
 })
 .get('/chapter_data', async ( ctx ) => { //获取文章内容详情
 	let params = ctx.query;
 	let id = params.id;
 	if(!id) id = "";
 	ctx.body = await service.get_chapter_content_data(id);
+})
+.get('/chapter_datas', async ( ctx ) => {
+	let params = ctx.query;
+	let url = commonUrl + '/drm/v0/fiction/link';
+	await axios.get(url,{
+		headers: headers,
+		params: {
+			fiction_id: params.fiction_id,
+			chapter_id: params.chapter_id,
+			format: 'jsonp'
+		},
+	}).then((res) => {
+		// console.log(res)
+		ctx.body = res.data;
+	}).catch((e) => {
+		console.log(e);
+	})
 })
 
 let router = new Router();
