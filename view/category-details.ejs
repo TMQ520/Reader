@@ -24,7 +24,7 @@
 					<section class="channel-group main-card">
 						<ul class="book-list">
 							<li v-for="book in item">
-								<a href="/book?id={{ book.fiction_id }}">
+								<a :href="'/book?id='+ book.fiction_id + '&cate_id=' + cate_id + '&nav=' + nav + '&from=categoryDetails'">
 									<div class="u-book">
 										<div class="cnt">
 											<div class="book-cover">

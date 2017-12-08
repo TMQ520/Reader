@@ -59,7 +59,7 @@
 											</div>
 											<ul class="u-list-2col">
 												<li v-for="item in item.male">
-													<a :href="'/category/details?cate_id=' + item.category_id + '&nav=' + item.label">
+													<a :href="'/category/details?cate_id=' + item.category_id + '&nav=' + item.label + '&from=category'">
 														<div class="u-cat-item" :style="'background-image:url(' + item.new_image+ ');'">
 															<h3>{{item.label}}</h3>
 															<p class="num">{{item.fiction_count}}</p>
@@ -74,7 +74,7 @@
 											</div>
 											<ul class="u-list-2col">
 												<li v-for="item in item.female">
-													<a :href="'/category/details?cate_id=' + item.category_id">
+													<a :href="'/category/details?cate_id=' + item.category_id + '&nav=' + item.label + '&from=category'">
 														<div class="u-cat-item" :style="'background-image:url(' + item.new_image+ ');'">
 															<h3>{{item.label}}</h3>
 															<p class="num">{{item.fiction_count}}</p>

@@ -40,6 +40,12 @@
 		background: url(http://image.read.duokan.com/mfsv2/download/fdsc3/p01eZH42sBV7/QTS90E2ZVritaa.png) no-repeat center;
 		background-size: 16px;
 	}
+	.currented { 
+		background-color: #efdb92;
+	}
+	.nofree {
+		background-color: #ccc;
+	}
 </style>
 </head>
 <body>
@@ -50,7 +56,7 @@
 		<div :style="{width: screen_width + 'px'}">
 			<div :style="{width: screen_width + 'px'}">
 				<div class="top" >
-					<a class="top_back" :href="'/reader?fiction_id='+ item.fiction_id +'&chapter_id='+ chapter_id"></a>
+					<a class="top_back" id='goBack'></a>
 					<span class="top_title"><%=nav%></span>
 					<a class="header-home" href="/"></a>
 				</div>
@@ -59,10 +65,12 @@
 					<div :style="{width: double_screen_width + 'px'}">
 						<div :style="{width: screen_width + 'px'}">
 							<div class="new-page channel-page" >
-								<section class="channel-group main-card" v-for="section in item.toc">
+								<section class="channel-group main-card" v-for="section in item">
 									<a @click='gotoChapter($index)' v-cloak>
-										<div class="channel-group_header" v-cloak>
-											<h2 class="channel-group_title channel-group_title_left">{{section.title}}</h2>
+										<div class="channel-group_header" v-cloak :class='{currented:$index == chapter_id, nofree: section.price !== 0}'>
+											<h2 class="channel-group_title channel-group_title_left" v-if="section.price == 0" >{{section.title}}</h2>
+											<h2 class="channel-group_title channel-group_title_left" v-if="section.price !== 0" style="float:left">{{section.title}}</h2>
+											<span v-if="section.price !== 0" style="margin-left: 10px">(收费)</span>
 										</div>
 									</a>
 								</section>

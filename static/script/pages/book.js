@@ -1,6 +1,9 @@
 /*pop() 方法用于删除并返回数组的最后一个元素。*/
-var id = location.href.split('?id=').pop();
-
+// var id = location.href.split('?id=').pop();
+var params = {
+	id: getUrlStr('id'),
+	from: getUrlStr('from')
+}
 
 
 // 设置cookie
@@ -32,17 +35,39 @@ var obj = {
 
 
 $(function(){
-	$.get('/ajax/books?id=' + id, function (d) {
+	$.get('/ajax/books?id=' + params.id, function (d) {
 		new Vue({
 			el: "#app",
 			data:d,
 			created: function() {
 				$('#init_loading').hide();
+				$('#goBack').click(function(){
+					if(params.from == 'main') {
+						location.href = '/';
+					} else if (params.from == 'categoryDetails') { 
+						var cate_id = getUrlStr('cate_id'),
+						nav = getUrlStr('nav');
+						location.href = '/category/details' + '?cate_id='+ cate_id + '&nav=' + nav + '&from='+ 'category';
+					} else if(params.from) {
+						location.href = '/' + params.from;
+					} else {
+						location.href = '/';
+					}
+				});
 			},
 			methods: {
-				readBook: function() {
+				readBook: function() { // 跳转到读书页面
+					var from;
 					var chapter_id = localStorage.getItem('ficiton_reader_' + this.item.fiction_id + '_last_chapter') || 0;
-					location.href = '/reader?fiction_id=' + this.item.fiction_id + '&chapter_id=' + chapter_id;
+					params.from ? from = params.from : from = 'book';
+					
+					if(params.from == 'categoryDetails') { // 如果是从分类页面跳转过来的
+						var cate_id = getUrlStr('cate_id'),
+						nav = getUrlStr('nav');
+						location.href = '/reader?fiction_id=' + this.item.fiction_id + '&chapter_id=' + chapter_id + '&cate_id='+ cate_id + '&nav=' + nav + '&from='+ 'categoryDetails';
+					} else {
+						location.href = '/reader?fiction_id=' + this.item.fiction_id + '&chapter_id=' + chapter_id + '&from=' + from;
+					}
 				}
 			}
 		});

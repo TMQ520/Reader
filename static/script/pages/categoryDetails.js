@@ -3,11 +3,16 @@ var start = 0; // 第几页
 var count = 10; // 每页显示的数目
 
 var id = getUrlStr('cate_id'); /*pop() 方法用于删除并返回数组的最后一个元素。*/
+var params = {
+	cate_id: getUrlStr('cate_id'),
+	nav: getUrlStr('nav'),
+	from: getUrlStr('from')
+}
 $.ajax({
 	url: '/ajax/cateDetails',
 	type: 'get',
 	data:{
-		id: id,
+		id: params.cate_id,
 		start: start,
 		count: count,
 		click: 1
@@ -30,6 +35,8 @@ $.ajax({
 				more: res.more, // 是否还有更多详情
 				loadmore: false, // 是否显示加载动画 
 				load: false,
+				nav: params.nav,
+				cate_id: params.cate_id,
 			},
 			created: function() {
 				var that = this;
@@ -56,9 +63,10 @@ $.ajax({
 						}
 					}
 				});*/
-			},
-			mounted: function() {
-				
+
+				$('#goBack').click(function(){
+					location.href = '/category';
+				})
 			},
 			methods: {
 				// 获取更多详情

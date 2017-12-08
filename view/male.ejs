@@ -12,7 +12,7 @@
 </head>
 <body>
 	<div id="root">
-		<div id="app" class="Swipe Swipe_full Destructor">
+		<div id="app" class="Swipe Swipe_full Destructor" v-cloak>
 			<div :style="{width:screen_width+'px'}" style="transition-duration: 0s;">
 				<div :style="{width:screen_width+'px'}">
 					<% include include/common-header.ejs %>
@@ -26,7 +26,7 @@
 										</div>
 										<ul class="book-list">
 											<li v-for="book in section.data.data">
-												<a href="/book?id={{ book.fiction_id }}">
+												<a :href="'/book?id='+ book.fiction_id +'&from=male'">
 													<div class="u-book">
 														<div class="cnt">
 															<div class="book-cover">

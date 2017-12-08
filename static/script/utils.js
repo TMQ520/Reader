@@ -29,6 +29,14 @@ function documentHeight(){
   //现代浏览器（IE9+和其他浏览器）和IE8的document.body.scrollHeight和document.documentElement.scrollHeight都可以
   return Math.max(document.body.scrollHeight,document.documentElement.scrollHeight);
 }
+
+function getStyle(ele,attr) {
+  if(window.getComputedStyle) {
+    return window.getComputedStyle(ele, null)[attr];
+  } else {
+    return ele.currentStyle[attr];
+  }
+}
 //获取页面浏览器视口的高度
 function windowHeight(){
   //document.compatMode有两个取值。BackCompat：标准兼容模式关闭。CSS1Compat：标准兼容模式开启。
@@ -46,4 +54,20 @@ function getUrlStr (name) {
    var r = window.location.search.substr(1).match(reg);
    if (r != null) return decodeURI(r[2]);
    return null;
-};
+ };
+
+
+ var Storage = (function () {
+  var prefix = 'ficiton_reader_';
+
+  var getItem = function(name) {
+    return localStorage.getItem(prefix + name);
+  };
+  var setItem = function(name, value) {
+    return localStorage.setItem(prefix + name, value);
+  };
+  return {
+    getItem: getItem,
+    setItem: setItem
+  }
+})();

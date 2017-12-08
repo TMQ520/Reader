@@ -60,11 +60,11 @@
 
 		var gotoChapter = function(chapter_id) {
 			Chapter_id = chapter_id;
-			getCurChapterContent()
+			getCurChapterContent(onChange_);
 		}
 
 		//获得当前章节内容
-		var getCurChapterContent = function() {
+		var getCurChapterContent = function(onChange) {
 			$.get("/ajax/chapter_datas",{
 				fiction_id : Fiction_id,
 				chapter_id : Chapter_id
@@ -74,9 +74,11 @@
 					Util.getJSONP(url, function(data) {
 						setTimeout(function(){
 							$('#init_loading').hide();
+							$('#loading').hide();
 							$('#Tag__pro').html((Chapter_id+1) + '/' + toc.length);
 						},500);
-						onChange_ && onChange_(data);
+						// console.log(data)
+						onChange && onChange(data);
 					});
 				}
 			}, 'json');
@@ -95,15 +97,17 @@
 				success: function(res) {
 					if (res.result == 0) {
 						toc = res.item.toc;
-						$('#nav_title').html('返回');
+						// $('#nav_title').html('返回');
 						$('#Tag__pro').html((Chapter_id+1) + '/' + toc.length);
 						for (var i = 0; i < toc.length; i++) {
 							Chapters.push({
 								"chapter_id" : toc[i].chapter_id,
 								"title" : toc[i].title
-							})
+							});
 						}
 						resolve(Chapters);
+						Util.StorageSetter(Fiction_id + '_toc', JSON.stringify(toc));
+						// console.log(JSON.stringify(Chapters))
 					} else {
 						reject(res);
 					}
@@ -117,7 +121,6 @@
 
 		//获得上一章内容
 		var prevChapter = function() {
-			$('#init_loading').show();
 			Chapter_id = parseInt(Chapter_id);
 			if (Chapter_id == 0) {
 				return
@@ -130,7 +133,6 @@
 
 		//获得下一章内容
 		var nextChapter = function() {
-			$('#init_loading').show();
 			Chapter_id = parseInt(Chapter_id);
 			if (Chapter_id == Chapters.length - 1) {
 				return
@@ -141,6 +143,24 @@
 			Util.StorageSetter(Fiction_id + '_last_chapter', Chapter_id);
 		};
 
+		// 获取文章详情
+		var getChapter = function(callback) {
+			// var scrollLock = false;
+			Chapter_id = parseInt(Chapter_id);
+			if (Chapter_id == Chapters.length - 1) {
+				return
+			}
+			Chapter_id++;
+			getCurChapterContent(function(data){
+				var RootContainer = $('#fiction_container')
+				var content = RootContainer.html();
+				// debugger
+				RenderBaseFrame(RootContainer)(content, data);
+				data ? callback && callback(): '';
+			});
+			// 设置已读的章节id
+			Util.StorageSetter(Fiction_id + '_last_chapter', Chapter_id);
+		};
 		return {
 			init : init,
 			go : gotoChapter,
@@ -148,24 +168,25 @@
 			next : nextChapter,
 			getChapter_id : function() {
 				return Chapter_id;
-			}
+			},
+			getChapter: getChapter
 		};
 	}
 
 	//画一下基本的展示框架
 	function RenderBaseFrame(container) {
-		function parseChapterData(jsonData) {
+		function parseChapterData(content, jsonData) {
 			var jsonObj = JSON.parse(jsonData);
-			var html = "<h4>" + jsonObj.t + "</h4>";
-			// var html = "<h4>" + "</h4>";
+			var html = content + "<h4>" + jsonObj.t + "</h4>";
 			for (var i = 0; i < jsonObj.p.length; i++) {
 				html += "<p>" + jsonObj.p[i] + "</p>";
 			}
 			return html;
 		}
 
-		return function(data) {
-			container.html(parseChapterData(data));
+		return function(htmlContent, data) {
+			var html = htmlContent || '';
+			container.html(parseChapterData(html, data));
 		};
 	}
 
@@ -178,16 +199,17 @@
 		var RootContainer = $('#fiction_container');
 		var params = {
 			fiction_id: parseInt(getUrlStr('fiction_id')),
-			chapter_id: parseInt(getUrlStr('chapter_id'))
+			chapter_id: parseInt(getUrlStr('chapter_id')),
+			from: getUrlStr('from')
 		}
 		if(!params.fiction_id){
 			history.back(); // 回退到上一级
 		}
 		var Fiction_id = params.fiction_id, // 全局书籍id
-			 Chapter_id = params.chapter_id || Util.StorageGetter(Fiction_id + '_last_chapter'); // 全局章节id
+			 Chapter_id = JSON.parse(Util.StorageGetter(Fiction_id + '_last_chapter')) || params.chapter_id; // 全局章节id
 
 		// 绑定事件
-		var ScrollLock = false;
+		var ScrollLock = false; // 锁定滚动条
 		var Doc = document;
 		var Screen = Doc.body;
 		var Win = $(window);
@@ -217,7 +239,7 @@
 
 		//获得章节数据，展示
 		var readerModel = ReaderModel(Fiction_id || 13359, Chapter_id || 0, function(data) {
-			readerUIFrame(data);
+			readerUIFrame('',data);
 			Dom.bottom_tool_bar.show();
 			setTimeout(function() {
 				ScrollLock = false;
@@ -383,7 +405,7 @@
 
 			//字体放大
 			$('#large-font').click(function() {
-				if (InitFontSize > 20) {
+				if (InitFontSize > 24) {
 					return;
 				}
 				InitFontSize += 1;
@@ -436,52 +458,78 @@
 				font_button.removeClass('current');
 
 				// 监听是否滚到底部
-				/*console.log('windowHeight: ' + windowHeight())
-					console.log('scrollTop: ' + scroll().top)
-					console.log('documentHeight: ' + documentHeight())*/
 				if(scroll().top + windowHeight() >= (documentHeight() - 50)) {
 					// 当加载到离底部只差一点距离时,
 					//请求新的数据
 					// console.log('windowHeight: ' + windowHeight())
 					// console.log('scrollTop: ' + scroll().top)
 					// console.log('documentHeight: ' + documentHeight())
-					console.log('正在加载中...')
+					console.log('正在加载中...');
 					if(!ScrollLock) {
 						ScrollLock = true;
-						readerModel.next();
+						$('#loading').show();
+						readerModel.getChapter(function (){
+							ScrollLock = false;
+						});
+
 					}
 				}
 			});
 
-			//章节翻页
+			//章节翻页(下一页)
 			Dom.next_button.click(function() {
+				$('#init_loading').show();
 				readerModel.next();
 			});
 
+			//章节翻页(上一页)
 			Dom.prev_button.click(function() {
+				$('#init_loading').show();
 				readerModel.prev();
 			});
 
 			//返回上级页面
-			Dom.back_button.click(function() {
+			/*Dom.back_button.click(function() {
 				if (Fiction_id) {
-					location.href = '/book/' + Fiction_id;
+					location.href = '/book?id=' + Fiction_id;
 				}
-			});
+			});*/
 
-			//返回
-			Dom.nav_title.click(function() {
-				location.href = 'javascript:history.back()';
-			});
+			//返回上级页面  book
+			/*Dom.nav_title.click(function() {
+				var from;
+				params.from == 'book' ? from = 'main' : from = params.from;
+				if (Fiction_id) {
+					location.href = '/book?id=' + Fiction_id + '&from=' + from;
+				}
+			});*/
 
-			//返回首页
+			//返回上级页面
 			$('.icon-back').click(function() {
-				location.href = '/';
+				var from;
+				params.from == 'book' ? from = 'main' : from = params.from;
+				if (Fiction_id) {
+					if(from == 'categoryDetails') {
+						var cate_id = getUrlStr('cate_id'),
+						nav = getUrlStr('nav');
+						location.href = '/book?id=' + Fiction_id + '&cate_id='+ cate_id +'&nav='+ nav +'&from='+ from;
+						return false;
+					}
+					location.href = '/book?id=' + Fiction_id + '&from=' + from;
+				}
 			});
 
 			//跳转目录
 			$('#menu_button').click(function() {
-				location.href = '/chapter?fiction_id='+ Fiction_id +'&chapter_id=' + Chapter_id;//跳转到目录页面
+				var from;
+				params.from == 'book' ? from = 'main' : from = params.from;
+				if(from == 'categoryDetails') {
+					var cate_id = getUrlStr('cate_id'),
+					nav = getUrlStr('nav');
+					location.href = '/chapter?fiction_id='+ Fiction_id +'&chapter_id=' + Chapter_id + '&cate_id='+ cate_id +'&nav='+ nav +'&from='+ from;
+					return false;
+				}
+				location.href = '/chapter?fiction_id='+ Fiction_id +'&chapter_id=' + Chapter_id + '&from=' + from;//跳转到目录页面
 			});
 
 			//屏幕中央事件
@@ -489,17 +537,9 @@
 				if (Dom.top_nav.css('opacity') == 0) {
 					Dom.top_nav.show().css('opacity', 1);
 					Dom.bottom_nav.show().css('opacity', 1);
-					// Dom.bottom_nav.show().removeClass('animated fadeOut').addClass('faseIn');
-					// Dom.top_nav.show().removeClass('animated fadeOut').addClass('faseIn');
-					// Dom.bottom_nav.show();
-					// Dom.top_nav.show();
 				} else {
 					Dom.top_nav.css('opacity', 0).hide();
 					Dom.bottom_nav.css('opacity', 0).hide();
-					// Dom.bottom_nav.hide().removeClass('animated fadeIn').addClass('faseOut');
-					// Dom.top_nav.hide().removeClass('animated fadeIn').addClass('faseOut');
-					// Dom.bottom_nav.hide();
-					// Dom.top_nav.hide();
 					font_container.css('transform','translate3d(0,' + font_container.height() + 'px,0)');
 					font_button.removeClass('current');
 				}

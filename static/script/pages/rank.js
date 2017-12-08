@@ -12,6 +12,11 @@ $.get('/ajax/ranks',function (d) {
 			screen_width: windowWidth,
 			double_screen_width: windowWidth*2,
 			item: d
+		},
+		created: function(){
+			$('#goBack').click(function(){
+				location.href = '/';
+			})
 		}
 	})
 }, 'json');
