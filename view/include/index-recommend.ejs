@@ -70,7 +70,7 @@
 						<p class="book-h5_author">{{ item.author }}</p>
 						<p class="book-h5_summary">{{ item.summary }}</p>
 						<div class="book-h5_wrap">
-							<div class="book-h5_tag" v-for="tag in item.tags">{{ tag }}</div>
+							<div class="book-h5_tag" v-for="tag in item.tags" v-if="$index > 0 && $index < 5">{{ tag }}</div>
 						</div>
 					</div>
 				</div>
