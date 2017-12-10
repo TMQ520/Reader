@@ -5,56 +5,13 @@ var params = {
 	from: getUrlStr('from')
 }
 
-/*$.ajax({
-	url: '/ajax/chapters',
-	type:'get',
-	data:{
-		fiction_id : params.fiction_id
-	},
-	dataType: 'json',
-	success: function(res) {
-		if (res.result == 0) {
-			var toc = res.item.toc;
-			$('#nav_title').html('返回');
-			var windowWidth = $(document.body).width();
-			if(windowWidth < 320) {
-				windowWidth = 320;
-			}
-
-			new Vue({
-				el: '#app_chapter',
-				data: {
-					screen_width: windowWidth,
-					double_screen_width: windowWidth * 2,
-					item: res.item,
-					chapter_id: params.chapter_id
-				},
-				created:function(){
-					$('#init_loading').hide();
-				},
-				methods:{
-					gotoChapter: function(chapter_id) {
-						localStorage.setItem('ficiton_reader_'+ params.fiction_id +'_last_chapter',chapter_id);
-						location.href = '/reader?fiction_id=' + params.fiction_id + '&chapter_id=' + chapter_id;
-					}
-				}
-			});
-		} else {
-		}
-	},
-	error: function (e) {
-
-	}
-});*/
-
-
 
 if(!params.fiction_id) {
 	history.back();
 }
 
 var toc = JSON.parse(Storage.getItem(params.fiction_id + '_toc')); 
-var chapter_id = Storage.getItem(params.fiction_id + '_last_chapter');
+var chapter_id = Storage.getItem(params.fiction_id + '_last_chapter') || params.chapter_id;
 
 $('#nav_title').html('返回');
 var windowWidth = $(document.body).width();
@@ -69,7 +26,7 @@ new Vue({
 		double_screen_width: windowWidth * 2,
 		item: toc,
 		fiction_id: params.fiction_id,
-		chapter_id: params.chapter_id
+		chapter_id: chapter_id
 	},
 	created:function(){
 		var that = this;

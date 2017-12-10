@@ -399,24 +399,6 @@
 			position: relative;
 			top: 21px;
 		}
-		.loading-icon {
-			margin: 0 auto;
-			margin-top: 50%;
-			background: url(data:image/gif;base64,R0lGODlhGAAYAIAAAK2trTE6QiH/C05FVFNDQVBFMi4wAwEAAAAh+QQFDwABACwDAAkAEgAGAAACFIQReah7GRZ0r5lJWayb4ms5n7YUACH5BAkPAAEALAIABwATAAoAAAIbhB+pq4cMwwMR0lbZTTvL1WVdWI1e45BRqkIFACH5BAkPAAEALAMABwASAAoAAAIdjA+px63r4EtmylktyI/jYHkd+GkbOY5M2LQsUwAAIfkECQ8AAQAsAwAIABMACAAAAhqMjwfLrWyaBG/FCa8NOPPcbd8WUpo5Jeq5FAA7);
-			width: 20px;
-			height: 20px;
-		}
-		.loading-mask {
-			text-align: center;
-			margin: 0 auto;
-			width: 100%;
-			height: 100%;
-			background: #000;
-			opacity: 0.5;
-			position: fixed;
-			top: 0px;
-		}
-
 		.buy-container {
 			width: 100%;
 			position: fixed;
@@ -483,9 +465,7 @@
 	</style>
 </head>
 <body>
-	<div class="loading-mask" id="init_loading">
-		<div class="loading-icon"></div>
-	</div>
+	<% include include/loading.ejs %>
 	<div class="container" id="root">
 		<div id="fiction_chapter_title"></div>
 		<div class="m-artical-action">
@@ -580,17 +560,13 @@
 		<div class="menu-mask" id="menu_mask" style="display:none"></div>
 		<div class="mask" id="mask" style="display:none"></div>
 	</div>
-	<script src="/script/zepto.js"></script>
+	<script src="/script/plugins/zepto.js"></script>
 	<script>
 		window.jQuery = $;
 	</script>
-	<script src="/script/jquery.base64.js"></script>
-	<script src="/script/jquery.jsonp.js"></script>
-	<script type="text/javascript" src="/script/utils.js"></script>
+	<script src="/script/plugins/jquery.base64.js"></script>
+	<script src="/script/plugins/jquery.jsonp.js"></script>
+	<script type="text/javascript" src="/script/plugins/utils.js"></script>
 	<script src='/script/pages/reader.js'></script>
-	<!-- <scripttype="text/javascript" src="http://pv.sohu.com/cityjson?ie=utf-8"></script>  
-	<scripttype="text/javascript">  
-		alert(returnCitySN.cip)  
-	</script> -->
 </body>
 </html>

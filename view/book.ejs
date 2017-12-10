@@ -192,32 +192,13 @@
 			font-size: 1.6rem;
 			overflow: hidden;
 		}
-		.loading-icon {
-			margin: 0 auto;
-			margin-top: 50%;
-			background: url(data:image/gif;base64,R0lGODlhGAAYAIAAAK2trTE6QiH/C05FVFNDQVBFMi4wAwEAAAAh+QQFDwABACwDAAkAEgAGAAACFIQReah7GRZ0r5lJWayb4ms5n7YUACH5BAkPAAEALAIABwATAAoAAAIbhB+pq4cMwwMR0lbZTTvL1WVdWI1e45BRqkIFACH5BAkPAAEALAMABwASAAoAAAIdjA+px63r4EtmylktyI/jYHkd+GkbOY5M2LQsUwAAIfkECQ8AAQAsAwAIABMACAAAAhqMjwfLrWyaBG/FCa8NOPPcbd8WUpo5Jeq5FAA7);
-			width: 20px;
-			height: 20px;
-		}
-		.loading-mask {
-			text-align: center;
-			margin: 0 auto;
-			width: 100%;
-			height: 100%;
-			background: #000;
-			opacity: 0.5;
-			position: fixed;
-			top: 0px;
-		}
 		[v-cloak] {
 		    display: none !important;
 		}
 	</style>
 </head>
 <body>
-	<div class="loading-mask" id="init_loading">
-		<div class="loading-icon"></div>
-	</div>
+	<% include include/loading.ejs %>
 	<div id='app' :style="{width:screen_width+'px'}" style='overflow: hidden' v-cloak>
 		<% include include/common-header.ejs %>
 		<div class='container-scroll' :style="{width:screen_width+'px'}">
@@ -239,7 +220,7 @@
 								价格：{{ item.price }}书币 / 千字
 							</p>
 
-							<p class="count" v-cloak>字数:{{ item.word_count }}字
+							<p class="count" v-cloak>字数:{{ item.word_count | worldCount}}字
 								<span class="u-booktag -serial" v-if='item.finish == false'>连载中</span>
 								<span class="u-booktag -serial" v-if='item.finish'>已完结</span>
 							</p>
@@ -272,7 +253,7 @@
 						</div>
 						<div class="folder-cnt">
 							<ul class="m-tag -color">
-								<li class="u-tag" v-for="tag in item.tags" v-cloak>{{ tag }}</li>
+								<li class="u-tag" v-for="tag in item.tags" v-cloak track-by="$index" >{{ tag }}</li>
 							</ul>
 						</div>
 					</div>
@@ -337,9 +318,9 @@
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript" src="/script/vue.js"></script>
-	<script type="text/javascript" src="/script/zepto.js"></script>
-	<script type="text/javascript" src="/script/utils.js"></script>
+	<script type="text/javascript" src="/script/plugins/vue.js"></script>
+	<script type="text/javascript" src="/script/plugins/zepto.js"></script>
+	<script type="text/javascript" src="/script/plugins/utils.js"></script>
 	<script type="text/javascript" src="/script/pages/book.js"></script>
 </body>
 </html>

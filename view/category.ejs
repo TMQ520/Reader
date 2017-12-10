@@ -43,7 +43,9 @@
 	</style>
 </head>
 <body>
+
 	<div id="root">
+		<% include include/loading.ejs %>
 		<div id="app" class="Swipe Swipe_full Destructor" v-cloak>
 			<div :style="{width:screen_width+'px'}" style="transition-duration: 0s;">
 				<div :style="{width:screen_width+'px'}">
@@ -94,8 +96,8 @@
 		</div>
 	</div>
 
-	<script src="/script/vue.js"></script>
-	<script src="/script/zepto.js"></script>
+	<script src="/script/plugins/vue.js"></script>
+	<script src="/script/plugins/zepto.js"></script>
 	<script src="/script/pages/category.js"></script>
 </body>
 </html>

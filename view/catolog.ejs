@@ -49,9 +49,7 @@
 </style>
 </head>
 <body>
-	<div class="loading-mask" id="init_loading" style='z-index: 2;'>
-		<div class="loading-icon"></div>
-	</div>
+	<% include include/loading.ejs %>
 	<div class="Swipe Swipe_full Destructor" id="app_chapter">
 		<div :style="{width: screen_width + 'px'}">
 			<div :style="{width: screen_width + 'px'}">
@@ -82,9 +80,9 @@
 			</div>
 		</div>
 	</div>
-	<script src="/script/vue.js"></script>
-	<script src="/script/zepto.js"></script>
-	<script type="text/javascript" src="/script/utils.js"></script>
+	<script src="/script/plugins/vue.js"></script>
+	<script src="/script/plugins/zepto.js"></script>
+	<script type="text/javascript" src="/script/plugins/utils.js"></script>
 	<script src="/script/pages/catolog.js"></script>
 </body>
 </html>

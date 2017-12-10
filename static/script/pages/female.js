@@ -13,7 +13,8 @@ $.get('/ajax/females',function (d) {
 		created:function () {
 			$('#goBack').click(function(){
 				location.href = '/';
-			})
+			});
+			$('#init_loading').hide();
 		}
 	})
 }, 'json');

@@ -55,6 +55,14 @@ $(function(){
 					}
 				});
 			},
+			filters: {
+				// 字数统计
+				worldCount: function (count) {
+					var world = Math.ceil(count / 10000);
+					world == 1 ? world = count :  world  = world + '万';
+					return world;
+				}
+			},
 			methods: {
 				readBook: function() { // 跳转到读书页面
 					var from;
