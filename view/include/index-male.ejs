@@ -10,7 +10,7 @@
 						<a href="/book?id={{ item.fiction_id }}">
 							<div class="book-h5_cover">
 								<img alt="{{ item.title }}" v-bind:src="item.cover">
-								<p class="book-h5_finish">完结</p>
+								<p class="book-h5_finish" v-if="item.finish">完结</p>
 							</div>
 							<div class="book-h5_info">
 								<p class="book-h5_title">{{ item.title }}</p>
@@ -27,7 +27,7 @@
 		</div>
 	</div>
 	<div class="channel-h5_footer_next">
-		<a href="javascript:" class="btn-h5_next">换一换</a>
+		<a href="javascript:" class="btn-h5_next" @click="changeContent(male_count, 2)">换一换</a>
 		<a href="/male" class="btn-h5_more">男生频道&gt;&gt;</a>
 	</div>
 </section>

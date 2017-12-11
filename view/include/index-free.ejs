@@ -83,6 +83,7 @@
 					<div class="book-cover">
 						<img v-bind:src="item.data.cover" alt="{{ item.ad_name }}">
 						<div class="u-tagRt -freefiction"></div>
+						<p class="book-h5_finish" v-if="item.data.finish">完结</p>
 					</div>
 					<div class="info">
 						<h3 class="title">{{ item.ad_name }}</h3>

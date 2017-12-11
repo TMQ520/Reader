@@ -111,7 +111,7 @@
 				<a href="/book?id={{ item.fiction_id }}">
 					<div class="book-h5_cover">
 						<img alt="{{ item.title }}" v-bind:src="item.cover">
-						<p class="book-h5_finish">完结</p>
+						<p class="book-h5_finish" v-if="item.finish">完结</p>
 					</div>
 					<div class="book-h5_info">
 						<p class="book-h5_title">{{ item.title }}</p>
