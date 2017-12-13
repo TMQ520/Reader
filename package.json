@@ -22,5 +22,9 @@
     "koa-views": "^6.0.2"
   },
   "devDependencies": {
+  },
+  "engines": {
+    "node": ">= 8.0.0",
+    "npm": ">= 5.0.0"
   }
 }
