@@ -59,7 +59,7 @@ $.ajax({
 					screen_width: windowWidth,
 					double_screen_width: windowWidth*2,
 					index_header_tab_width: index_header_tab_width,
-					top: d.items[0].data.data,
+					top: d.items[0].data.data.slice(0,2),
 					hot: d.items[1].data.data,
 					recommend: recommend.slice(0,count), // 重磅推荐
 					female: female.slice(0,count),
@@ -94,22 +94,12 @@ $.ajax({
 					});
 
 					// 左右移动屏幕
-					mySwiper = new Swiper ('.swiper-container', {
+					mySwiper = new Swiper ('.swiper-a', {
 						direction: 'horizontal',
 						initialSlide:0,
 						slidesPerView:"auto",
 						resistanceRatio : 0,
 						speed: 500,
-						onSlideChangeStart: function(swiper){
-
-						},
-			            //头部移动--最后完善
-			            onSliderMove: function(swiper, event){
-			            	
-			            },
-			            onTouchStart: function(swiper){
-
-			            },
 			            onTransitionEnd: function(swiper){
 			            	ind = swiper.realIndex;
 			            	// console.log(ind)
@@ -125,7 +115,15 @@ $.ajax({
 			            },
 			            onSlideChangeEnd: function(swiper){
 			            },
-			        })
+			        });
+			        var banner = new Swiper('.swiper-banner', {
+			        	direction: 'horizontal',
+            			resistanceRatio : 0,
+			            loop: true,
+			            autoplay: 2500,
+			            // lazyLoading: true,
+			            nested: true				
+			        });
 				},
 				//事件绑定---书城和书架的切换
 				methods: {

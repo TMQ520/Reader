@@ -192,6 +192,12 @@
 			font-size: 1.6rem;
 			overflow: hidden;
 		}
+		.floder-cnt{
+			-webkit-transition: all 0.3s;
+			-moz-transition: all 0.3s;
+			-ms-transition: all 0.3s;
+			transition: all 0.3s;
+		}
 		[v-cloak] {
 		    display: none !important;
 		}
@@ -239,7 +245,10 @@
 					</div>
 					<div class="u-folder">
 						<div class="floder-cnt" style="padding: 8px 15px;" v-cloak>
-							{{ item.summary }}
+							<p id="">{{ item.content }}</p>
+							<!-- <div class="more-summary" style="text-align: right;">
+								<span style="padding: 5px;" >更多>></span>
+							</div> -->
 						</div>
 						<div class="folder-tail" v-cloak>
 							<div style="padding: 10px;">最新：{{ item.latest }}</div>

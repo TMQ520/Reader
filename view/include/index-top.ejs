@@ -38,6 +38,9 @@
 		background-size: 22px;
 		vertical-align: -5px;
 	}
+	.swiper-banner > .swiper-wrapper,.swiper-banner > .swiper-wrapper > .swiper-slide{
+		height: 12rem;
+	}
 </style>
 
 <section class="top-home">
@@ -46,12 +49,22 @@
 			输入书名/作者/关键字
 		</div>
 	</a>
-	<div class='slider-banner'>
+	<!-- <div class='slider-banner'>
 		<div>
 			<a href="http://dushu.xiaomi.com/#page=channel&id=410">
 				<img class="cover" src="http://image.read.duokan.com/mfsv2/download/fdsc3/p01tBqnupVze/qayTXiXrMm1lVm.jpg" title="海量免费书籍">
 			</a>
 		</div>
+	</div> -->
+	<div class="swiper-container swiper-banner">
+		<div class="swiper-wrapper">
+			<div class="swiper-slide" v-for="item in top" track-by="$index">
+				<a :href="'http://dushu.xiaomi.com/#page=topic&type=fiction&id='+ item.reference_id">
+					<img class="cover" :src="item.ad_pic_url" title="{{$index}}">
+				</a>
+			</div>
+		</div>
+		<!-- <div class="swiper-pagination" style="position: relative;top:-20px;text-align:center;z-index:10"></div> -->
 	</div>
 	<ul class="top-home-btn">
 		<li>
