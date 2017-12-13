@@ -81,7 +81,8 @@
 			<a href="/book?id={{ item.data.fiction_id }}">
 				<div class="u-book -vertical">
 					<div class="book-cover">
-						<img v-bind:src="item.data.cover" alt="{{ item.ad_name }}">
+						<!-- <img v-bind:src="item.data.cover" alt="{{ item.ad_name }}"> -->
+						<img alt="{{ item.ad_name }}" v-lazy="item.data.cover">
 						<div class="u-tagRt -freefiction"></div>
 						<p class="book-h5_finish" v-if="item.data.finish">完结</p>
 					</div>

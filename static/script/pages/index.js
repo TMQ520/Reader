@@ -20,9 +20,17 @@ $.ajax({
 			var offset = $('.Swipe-tab').find('a').eq(0).offset();
 			var index_header_tab_width = offset.width;
 			recommend = d.items[2].data.data;
+			// recommend_female = d.items[2].data.data;
 			female = d.items[3].data.data;
 			male = d.items[4].data.data;
 			free = d.items[5].data.data;
+
+			// 使用图片懒加载中间件
+			Vue.use(VueLazyload, {
+				preLoad: 1.2,
+				error: 'img/default_book.png',
+				loading: 'img/default_book.png'
+			});
 
 			count = 5;
 			new Vue({
@@ -47,6 +55,7 @@ $.ajax({
 					recommend_count: count,// 用来记录显示的数目
 					female_count: count,
 					male_count: count,
+					recommend_sex: 'm', // 默认为男生
 				},
 				created: function(){
 					$(window).on('resize',function(){
@@ -56,9 +65,10 @@ $.ajax({
 						}*/
 					});
 					$('#init_loading').hide();
-
-					
-
+					$('#shelf_switch').click(function() {
+						$(this).toggleClass('shelf__switch_list');
+						$('.shelf > .book-list').toggleClass('shelf-book book-table');
+					});
 				},
 				//事件绑定---书城和书架的切换
 				methods: {
@@ -77,6 +87,7 @@ $.ajax({
 							this.tab_1_class = "";
 						}
 					},
+					// 点击换一换
 					changeContent: function (num, type) {
 						var typeName = '',
 						content; 
@@ -86,7 +97,12 @@ $.ajax({
 						switch(type){
 							case 0:
 							typeName = 'recommend';
-							content = recommend;break;
+							if(this.recommend_sex == 'm') {
+								content = recommend.slice(0,15);
+							} else if (this.recommend_sex == 'f') {
+								content = recommend.slice(15,30);
+							}
+							break;
 							case 1:
 							typeName = 'female';
 							content = female;break;
@@ -97,6 +113,12 @@ $.ajax({
 						
 						this[typeName] = content.slice(num - 5, num);
 						this[typeName + '_count'] = num;
+					},
+					// 点击切换重磅推荐的男 | 女
+					changeSex: function (type) {
+						$('.tab > a').removeClass('tab_on').eq(type).addClass('tab_on');
+						type == 0 ? this.recommend_sex = 'm': this.recommend_sex = 'f';
+						this.changeContent(0, 0);
 					}
 				}
 			})

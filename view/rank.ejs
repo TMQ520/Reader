@@ -22,7 +22,7 @@
 								<div>
 									<ul class="original-rank-list">
 										<li class="original-rank-list_item" v-if="$index>18" v-for="item in item.items">
-											<img v-bind:src="item.cover" class="original-rank-list_img">
+											<img v-lazy="item.cover" class="original-rank-list_img">
 											<div class="original-rank-list_content">
 												<p class="original-rank-list_page" v-for="book in item.description">
 													<span class="original-rank-list_num">{{ $index + 1}}</span>
@@ -42,6 +42,7 @@
 	</div>
 
 	<script src="/script/plugins/vue.js"></script>
+	<script src="https://unpkg.com/vue-lazyload/vue-lazyload.js"></script>
 	<script src="/script/plugins/zepto.js"></script>
 	<script src="/script/pages/rank.js"></script>
 </body>

@@ -8,6 +8,13 @@ var params = {
 	nav: getUrlStr('nav'),
 	from: getUrlStr('from')
 }
+// 使用图片懒加载中间件
+Vue.use(VueLazyload, {
+	preLoad: 1.2,
+	error: 'img/default_book.png',
+	loading: 'img/default_book.png'
+});
+
 $.ajax({
 	url: '/ajax/cateDetails',
 	type: 'get',

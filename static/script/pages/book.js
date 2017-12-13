@@ -35,7 +35,16 @@ var obj = {
 
 
 $(function(){
+	
+	
 	$.get('/ajax/books?id=' + params.id, function (d) {
+		// 使用图片懒加载中间件
+		Vue.use(VueLazyload, {
+			preLoad: 1.2,
+			error: 'img/default_book.png',
+			loading: 'img/default_book.png'
+		});
+		
 		new Vue({
 			el: "#app",
 			data:d,

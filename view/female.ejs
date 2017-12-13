@@ -31,7 +31,7 @@
 												<div class="u-book">
 													<div class="cnt">
 														<div class="book-cover">
-															<img alt="{{ book.title }}" v-bind:src="book.cover">
+															<img alt="{{ book.title }}" v-lazy="book.cover">
 															<div class="u-tagRT"></div>
 														</div>
 														<div class="info">
@@ -61,6 +61,7 @@
 	</div>
 
 	<script src="/script/plugins/vue.js"></script>
+	<script src="https://unpkg.com/vue-lazyload/vue-lazyload.js"></script>
 	<script src="/script/plugins/zepto.js"></script>
 	<script src="/script/pages/female.js"></script>
 </body>

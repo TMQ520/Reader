@@ -1,101 +1,155 @@
 <style type="text/css">
-	.shelf-top{
-		padding: 10px 20px 0;
-	}
-	.shelf-top .shelf-search{
-		margin-right: 46px; 
-	}
-	.shelf-search{
-		font-size: 12px;
-		color: #ccc;
-		border: 1px solid #eee;
-		border-radius: 4px;
-		line-height: 36px;
-		background: url(http://image.read.duokan.com/mfsv2/download/fdsc3/p01dSYLeWtSR/tY73MgTfVw7UAS.png) no-repeat 10px center;
-		background-size: 14px;
-		padding-left: 32px;
-	}
-	.shelf-switch{
-		width: 36px;
-		height: 36px;
-		float: right;
-		border-radius: 4px;
-		background: url(http://image.read.duokan.com/mfsv2/download/fdsc3/p01yLF3fEj8l/b7UfAdlfufQKML.png) no-repeat center;
-		background-size: 16px;
-		border: 1px solid #eee;
-	}
-	.book-list>li{
-		position: relative;
-		cursor: pointer;
-		overflow: hidden;
-	}
-	.book-list li{
-		border-bottom: 1px solid #f0f0f0;
-	}
-	.u-book {
-		position: relative;
-		overflow: hidden;
-	}
-	.shelf .book-list .u-book{
-		padding:13px 20px;
-		width: auto; 
-	}
-	.u-book .book-cover{
-		float: left;
-		margin-right: 10px;
-	}
-	.book-cover{
-		position: relative;
-		width: 8.5rem;
-		height: 11.3rem;
-		background-color: #eeece9; 
-		box-shadow: 0px 6px 5px -3px #aaa;
-		border: 1px solid #f0f0f0;
-		border-bottom: none;
-		overflow: hidden;
-	}
-	.book-cover img{
-		width: 100%;
-		height: 100%;
-	}
-	.book-cover:after {
-		content: '';
-		position: absolute;
-		top: 0;
-		bottom: 0;
-		left: 0;
-		right: 0;
-	}
-	.u-book .info {
-		padding-top: 1.2rem;
-	}
-	.u-book .title {
-		margin-bottom: 4px;
-		font-size: 16px;
-		font-weight: 400;
-		color: #000;
-	}
-	.single-line {
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-	}
-	.u-book .author, .u-book .extra {
-		margin-top: 4px;
-		font-size: 12px;
-		color: #8d8d8d;
-	}
-	.u-book .author {
-		color: #666;
-	}
-	.book-list li:last-child {
-		border: none;
-	}
+.shelf-top{
+	padding: 10px 20px 0;
+}
+.shelf-top .shelf-search{
+	margin-right: 46px; 
+}
+.shelf-search{
+	font-size: 12px;
+	color: #ccc;
+	border: 1px solid #eee;
+	border-radius: 4px;
+	line-height: 36px;
+	background: url(http://image.read.duokan.com/mfsv2/download/fdsc3/p01dSYLeWtSR/tY73MgTfVw7UAS.png) no-repeat 10px center;
+	background-size: 14px;
+	padding-left: 32px;
+}
+.shelf-switch{
+	width: 36px;
+	height: 36px;
+	float: right;
+	border-radius: 4px;
+	background: url(http://image.read.duokan.com/mfsv2/download/fdsc3/p01yLF3fEj8l/b7UfAdlfufQKML.png) no-repeat center;
+	background-size: 16px;
+	border: 1px solid #eee;
+}
+.shelf__switch_list {
+	background-image: url(http://image.read.duokan.com/mfsv2/download/fdsc3/p014nDc0lHYW/lDeZ3lL4nmgnmf.png);
+}
+.book-table {
+	font-size: 0;
+}
+.shelf-book, .shelf .book-list .u-book {
+	padding: 13px 20px;
+}
+.book-list>li{
+	position: relative;
+	cursor: pointer;
+	overflow: hidden;
+}
+.book-list li{
+	border-bottom: 1px solid #f0f0f0;
+}
+.book-table li {
+	width: 33.3%;
+	display: inline-block;
+	vertical-align: top;
+	line-height: 1;
+	margin-bottom: 8px;
+}
+.book-table li:nth-child(3n+1) {
+	text-align: left;
+}
+.shelf .shelf-book>li {
+	border: none;
+	padding: 0;
+	margin-bottom: 4px;
+}
+.u-book {
+	position: relative;
+	overflow: hidden;
+}
+.shelf .book-list .u-book{
+	padding:13px 20px;
+	width: auto; 
+}
+.shelf .book-table .u-book {
+	padding: 0;
+}
+.u-book .book-cover{
+	float: left;
+	margin-right: 10px;
+}
+.book-cover{
+	position: relative;
+	width: 8.5rem;
+	height: 11.3rem;
+	background-color: #eeece9; 
+	box-shadow: 0px 6px 5px -3px #aaa;
+	border: 1px solid #f0f0f0;
+	border-bottom: none;
+	overflow: hidden;
+}
+.book-cover img{
+	width: 100%;
+	height: 100%;
+}
+.book-cover:after {
+	content: '';
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+.shelf-book .book-cover {
+	float: none;
+	width: 90px;
+	height: 120px;
+}
+.shelf .book-table .u-book .book-cover {
+	margin: 0;
+}
+.u-book .info {
+	padding-top: 1.2rem;
+}
+.shelf-book .u-book .info {
+	width: 84px;
+	padding-top: 8px;
+	margin: 0;
+	text-align: left;
+}
+.u-book .title {
+	margin-bottom: 4px;
+	font-size: 16px;
+	font-weight: 400;
+	color: #000;
+}
+.shelf-book .u-book .title {
+	font-size: 12px;
+	color: #666;
+	font-weight: normal;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	white-space: inherit;
+	line-height: 1.4;
+	height: 32px;
+}
+.single-line {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.u-book .author, .u-book .extra {
+	margin-top: 4px;
+	font-size: 12px;
+	color: #8d8d8d;
+}
+.u-book .author {
+	color: #666;
+}
+.shelf-book .author, .shelf-book .extra, .shelf-book .wrap {
+	display: none;
+}
+.book-list li:last-child {
+	border: none;
+}
 </style>
 
 <div class="shelf">
 	<div class="shelf-top">
-		<div class="shelf-switch"></div>
+		<div class="shelf-switch" id="shelf_switch"></div>
 		<a href="/search">
 			<div class="shelf-search">输入书名/作者/关键字</div>
 		</a>
@@ -108,16 +162,16 @@
 						<img src="http://cover.read.duokan.com/mfsv2/download/s010/p01TZQiOj74K/gsWZRIoJs64Q1W.jpg!s">
 					</div>
 
-				<div class="info">
-					<h3 class="title single-line">踏天封神</h3>
-					<p class="author single-line">
-						<span class="author">狼叔大大</span>
-					</p>
-					<p class="extra single-line">已读：第2章 少年承诺</p>
-					<div class="wrap">
-						<p class="extra single-line">最新：第936章 踏天封神(大结局)</p>
+					<div class="info">
+						<h3 class="title single-line">踏天封神</h3>
+						<p class="author single-line">
+							<span class="author">狼叔大大</span>
+						</p>
+						<p class="extra single-line">已读：第2章 少年承诺</p>
+						<div class="wrap">
+							<p class="extra single-line">最新：第936章 踏天封神(大结局)</p>
+						</div>
 					</div>
-				</div>
 				</a>
 			</div>
 		</li>
