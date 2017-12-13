@@ -1,6 +1,26 @@
 //$.get()请求返回的数据是个字符串，所以需在后面加"json"条件，指明为json数据
 // 书城首页接口
 
+/*<div :style="{width:double_screen_width+'px',transform:'translate3d('+position+'px,0px,0px)'}" style="transition-duration: .5s;">
+<div class='container-wrap' :style="{width:screen_width+'px'}" style="float:left;">
+<div class="container-scroll" style="top:0px;">
+<% include include/index-top.ejs %>
+<% include include/index-hot.ejs %>
+<% include include/index-recommend.ejs %>
+
+<% include include/index-female.ejs %>
+<% include include/index-male.ejs %>
+
+<% include include/index-free.ejs %>
+<% include include/index-bottom.ejs %>
+</div>
+</div>
+<div :style="{width:screen_width+'px'}" style="float:left;">
+<% include include/index-shelf.ejs %>
+</div>
+</div>*/
+
+// http://www.zhangxinxu.com/wordpress/2013/06/html5-history-api-pushstate-replacestate-ajax/
 
 var recommend = [],
 female = [],
@@ -58,6 +78,8 @@ $.ajax({
 					recommend_sex: 'm', // 默认为男生
 				},
 				created: function(){
+					var that = this;
+
 					$(window).on('resize',function(){
 						window.location.reload();
 						/*if($(this).width() < 768){
@@ -65,27 +87,63 @@ $.ajax({
 						}*/
 					});
 					$('#init_loading').hide();
+					// 书架展示,列表和多行
 					$('#shelf_switch').click(function() {
 						$(this).toggleClass('shelf__switch_list');
 						$('.shelf > .book-list').toggleClass('shelf-book book-table');
 					});
+
+					// 左右移动屏幕
+					mySwiper = new Swiper ('.swiper-container', {
+						direction: 'horizontal',
+						initialSlide:0,
+						slidesPerView:"auto",
+						resistanceRatio : 0,
+						speed: 500,
+						onSlideChangeStart: function(swiper){
+
+						},
+			            //头部移动--最后完善
+			            onSliderMove: function(swiper, event){
+			            	
+			            },
+			            onTouchStart: function(swiper){
+
+			            },
+			            onTransitionEnd: function(swiper){
+			            	ind = swiper.realIndex;
+			            	// console.log(ind)
+			            	if(ind == 0){
+			            		that.header_position = index_header_tab_width / 2;
+			            		that.tab_1_class = "Swipe-tab_on";
+			            		that.tab_2_class = "";
+			            	} else {
+			            		that.header_position = index_header_tab_width / 2 + index_header_tab_width;
+			            		that.tab_2_class = "Swipe-tab_on";
+			            		that.tab_1_class = "";
+			            	}
+			            },
+			            onSlideChangeEnd: function(swiper){
+			            },
+			        })
 				},
 				//事件绑定---书城和书架的切换
 				methods: {
 					tabSwitch: function (pos) {
 						this.duration = 0.5;
 						this.header_duration = 0.5;
-						if(pos == 0) {
-							this.position = 0;
+						/*if(pos == 0) {
+							// this.position = 0;
 							this.header_position = index_header_tab_width/2;
 							this.tab_1_class = "Swipe-tab_on";
 							this.tab_2_class = "";
 						} else {
-							this.position = (-windowWidth);
+							// this.position = (-windowWidth);
 							this.header_position = index_header_tab_width/2 + index_header_tab_width;
 							this.tab_2_class = "Swipe-tab_on";
 							this.tab_1_class = "";
-						}
+						}*/
+						mySwiper.slideTo(pos, 500);
 					},
 					// 点击换一换
 					changeContent: function (num, type) {
@@ -122,9 +180,9 @@ $.ajax({
 					}
 				}
 			})
-		}
-	},
-	error:function(err){
+}
+},
+error:function(err){
 		// console.log(err);
 	}
 });

@@ -41,8 +41,8 @@ $(function(){
 		// 使用图片懒加载中间件
 		Vue.use(VueLazyload, {
 			preLoad: 1.2,
-			error: 'img/default_book.png',
-			loading: 'img/default_book.png'
+			error: '../../img/default_book.png',
+			loading: '../../img/default_book.png'
 		});
 		
 		new Vue({

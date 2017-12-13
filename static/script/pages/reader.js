@@ -69,16 +69,25 @@
 				fiction_id : Fiction_id,
 				chapter_id : Chapter_id
 			}, function(data) {
+				$('#init_loading').hide();
 				if (data.result == 0) {
 					var url = data.url;
 					Util.getJSONP(url, function(data) {
 						setTimeout(function(){
-							$('#init_loading').hide();
-							$('#loading').hide();
-							$('#Tag__pro').html((Chapter_id+1) + '/' + toc.length);
+							$('#loading').hide().html('正在加载中...');
+							$('#Tag__pro').html((Chapter_id + 1) + '/' + toc.length);
 						},500);
-						// console.log(data)
-						onChange && onChange(data);
+						// console.log( typeof data)
+						var content = JSON.parse(data);
+						content.sure = true;
+						onChange && onChange(content);
+					});
+				} else {
+					$('#loading').show().html('暂无数据');
+					onChange && onChange({
+						t:  toc[Chapter_id].title, 
+						p: ["暂无书籍详情..."],
+						sure: false
 					});
 				}
 			}, 'json');
@@ -156,7 +165,7 @@
 				var content = RootContainer.html();
 				// debugger
 				RenderBaseFrame(RootContainer)(content, data);
-				data ? callback && callback(): '';
+				data.sure == true ? callback && callback(true): callback && callback(false);
 			});
 			// 设置已读的章节id
 			Util.StorageSetter(Fiction_id + '_last_chapter', Chapter_id);
@@ -176,10 +185,11 @@
 	//画一下基本的展示框架
 	function RenderBaseFrame(container) {
 		function parseChapterData(content, jsonData) {
-			var jsonObj = JSON.parse(jsonData);
-			var html = content + "<h4>" + jsonObj.t + "</h4>";
-			for (var i = 0; i < jsonObj.p.length; i++) {
-				html += "<p>" + jsonObj.p[i] + "</p>";
+			// console.log(jsonData)
+			// var jsonObj = JSON.parse(jsonData);
+			var html = content + "<h4>" + jsonData.t + "</h4>";
+			for (var i = 0; i < jsonData.p.length; i++) {
+				html += "<p>" + jsonData.p[i] + "</p>";
 			}
 			return html;
 		}
@@ -287,13 +297,13 @@
 			var bottomcolor = Util.StorageGetter('bottom_color');
 			var color = Util.StorageGetter('background_color');
 			var font = Util.StorageGetter('font_color');
-			var bkCurColor = Util.StorageGetter('background_color');
+			var bkCurColor = Util.StorageGetter('background_color') || '#e9dfc7';
 			var fontColor = Util.StorageGetter('font_color');
 
 			for (var i = 0; i < colorArr.length; i++) {
 				var display = 'none';
 				if (bkCurColor == colorArr[i].value) {
-					display = '';
+					display = 'block';
 				}
 				Dom.bk_container.append('<div class="bk-container" id="' + colorArr[i].id + '" data-font="' + colorArr[i].font + '"  data-bottomcolor="' + colorArr[i].bottomcolor + '" data-color="' + colorArr[i].value + '" style="background-color:' + colorArr[i].value + '"><div class="bk-container-current" style="display:' + display + '"></div><span style="display:none">' + colorArr[i].name + '</span></div>');
 			}
@@ -329,6 +339,10 @@
 
 			RootContainer.css('font-size', InitFontSize);
 
+
+			// 默认设置上下工具栏隐藏
+			Dom.top_nav.css('opacity', 0).hide();
+			Dom.bottom_nav.css('opacity', 0).hide();
 		})();
 
 		
@@ -468,8 +482,8 @@
 					if(!ScrollLock) {
 						ScrollLock = true;
 						$('#loading').show();
-						readerModel.getChapter(function (){
-							ScrollLock = false;
+						readerModel.getChapter(function (bool){
+							bool ? ScrollLock = false : ScrollLock = true;
 						});
 
 					}
