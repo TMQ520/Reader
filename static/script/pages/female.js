@@ -5,7 +5,7 @@ $.get('/ajax/females',function (d) {
 	}
 	// 使用图片懒加载中间件
 	Vue.use(VueLazyload, {
-		preLoad: 1.2,
+		preLoad: 1.3,
 		error: 'img/default_book.png',
 		loading: 'img/default_book.png'
 	});

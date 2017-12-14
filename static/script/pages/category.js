@@ -3,12 +3,7 @@ $.get('/ajax/categorys',function (d) {
 	if(windowWidth < 320) {
 		windowWidth = 320;
 	}
-	// 使用图片懒加载中间件
-	Vue.use(VueLazyload, {
-		preLoad: 1.2,
-		error: 'img/default_book.png',
-		loading: 'img/default_book.png'
-	});
+	
 	
 	new Vue({
 		el: '#app',
@@ -22,6 +17,14 @@ $.get('/ajax/categorys',function (d) {
 				location.href = '/';
 			});
 			$('#init_loading').hide();
+		},
+		ready: function (){
+			// 使用图片懒加载中间件
+			Vue.use(VueLazyload, {
+				preLoad: 1.3,
+				error: 'img/default_book.png',
+				loading: 'img/default_book.png'
+			});
 		}
 	})
 }, 'json');

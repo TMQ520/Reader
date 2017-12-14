@@ -56,6 +56,7 @@ router.use('/', routers.home.routes())
 .use('/category', routers.category.routes())
 .use('/female', routers.female.routes())
 .use('/male', routers.male.routes())
+.use('/list', routers.commonView.routes())
 .use('/chapter', routers.catolog.routes())
 .use('/reader', routers.reader.routes())
 .use('/ajax', routers.homeApi.routes());

@@ -90,3 +90,15 @@ $(function(){
 		});
 	}, 'json');		
 })
+
+
+/**
+ * @desc 根据name删除cookie
+ * @param {String} name
+ */
+function removeCookie(name) {
+	var date = new Date();
+	// 设置已过期,系统会立即删除cookie
+	date.setDate(date.getDate() + -1);
+	document.cookie = name + '=' + 1 + ';expires=' + date;
+}

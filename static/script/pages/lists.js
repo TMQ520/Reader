@@ -1,23 +1,22 @@
 // 获取分类详情页的
 var start = 0; // 第几页
 var count = 10; // 每页显示的数目
+var url = '';
 
-var id = getUrlStr('cate_id'); /*pop() 方法用于删除并返回数组的最后一个元素。*/
+var id = getUrlStr('list_id'); /*pop() 方法用于删除并返回数组的最后一个元素。*/
 var params = {
-	cate_id: getUrlStr('cate_id'),
+	list_id: getUrlStr('list_id'),
 	nav: getUrlStr('nav'),
 	from: getUrlStr('from')
 }
 
-
 $.ajax({
-	url: '/ajax/cateDetails',
+	url: '/ajax/lists',
 	type: 'get',
 	data:{
-		id: params.cate_id,
+		id: params.list_id,
 		start: start,
-		count: count,
-		click: 1
+		count: count
 	},
 	dataType: 'json',
 	success: function(res) {
@@ -37,6 +36,7 @@ $.ajax({
 			loading: '../../img/default_book.png'
 		});
 
+
 		var app = new Vue({
 			el: '#app',
 			data: {
@@ -49,6 +49,7 @@ $.ajax({
 				nav: params.nav,
 				cate_id: params.cate_id,
 				scrollLock: false, // 是否禁止滚动条请求
+				from : params.from,
 			},
 			created: function() {
 				var that = this;
@@ -63,24 +64,8 @@ $.ajax({
 				
 
 				$('#goBack').click(function(){
-					location.href = '/category';
-				});
-			},
-			ready: function (){
-				$(window).scroll(function() {
-					console.log('windowHeight: ' + windowHeight())
-					console.log('scrollTop: ' + scroll().top)
-					console.log('documentHeight: ' + documentHeight())
-					if(scroll().top + windowHeight() >= (documentHeight() -50)) {
-						// 当加载到离底部只差一点距离时,
-						//请求新的数据
-						console.log('windowHeight: ' + windowHeight())
-						console.log('scrollTop: ' + scroll().top)
-						console.log('documentHeight: ' + documentHeight())
-						if(that.more == true){
-							that.getDetails();
-						}
-					}
+					// location.href = '/category';
+					history.back();
 				});
 			},
 			methods: {
@@ -92,7 +77,7 @@ $.ajax({
 						start += count;
 						console.log('start: ' + start)
 						$.ajax({
-							url: '/ajax/cateDetails',
+							url: '/ajax/lists',
 							type: 'get',
 							data:{
 								id: id,
@@ -134,29 +119,4 @@ $.ajax({
 	error: function() {
 		console.log('请求错误')
 	}
-})
-
-$(function(){
-	var Win = $(window);
-	Win.scroll(function(){
-	// debugger
-	console.log('windowHeight: ' + windowHeight())
-	console.log('scrollTop: ' + scroll().top)
-	console.log('documentHeight: ' + documentHeight())
-
-	// 监听是否滚到底部
-	if(scroll().top + windowHeight() >= (documentHeight() - 50)) {
-		// 当加载到离底部只差一点距离时,
-		//请求新的数据
-		// console.log('windowHeight: ' + windowHeight())
-		// console.log('scrollTop: ' + scroll().top)
-		// console.log('documentHeight: ' + documentHeight())
-		console.log('正在加载中...');
-		if(!that.ScrollLock) {
-			that.ScrollLock = true;
-			// that.load = true;
-			// that.getDetails(12);
-		}
-	}
 });
-})

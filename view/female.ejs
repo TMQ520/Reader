@@ -9,6 +9,15 @@
 	<link rel="stylesheet" href="/css/reset.css"/>
 	<link rel="stylesheet" href="/css/all.css"/>
 	<title><%= nav %></title>
+	<style type="text/css">
+		.channel-group__footer{
+			display: block;
+			border-top: 1px solid #f0f0f0;
+			text-align: center;
+			font-size: 14px;
+			padding: 10px 0;
+		}
+	</style>
 </head>
 <body>
 	<div id="root">
@@ -27,42 +36,43 @@
 										</div>
 										<ul class="book-list">
 											<li v-for="book in section.data.data">
-											<a :href="'/book?id='+ book.fiction_id +'&from=female'">
-												<div class="u-book">
-													<div class="cnt">
-														<div class="book-cover">
-															<img alt="{{ book.title }}" v-lazy="book.cover">
-															<div class="u-tagRT"></div>
-														</div>
-														<div class="info">
-															<h3 class="title single-line">{{ book.title }}</h3>
-															<p class="summary">{{ book.summary }}</p>
-															<div class="wrap">
-																<div class="book-tag" v-for="tag in book.tags">{{ tag }}</div>
-												
-																<p class="author single-line">
-																	<span class="author">{{ book.authors }}</span>
-																</p>
+												<a :href="'/book?id='+ book.fiction_id +'&from=female'">
+													<div class="u-book">
+														<div class="cnt">
+															<div class="book-cover">
+																<img alt="{{ book.title }}" v-lazy="book.cover">
+																<div class="u-tagRT"></div>
+															</div>
+															<div class="info">
+																<h3 class="title single-line">{{ book.title }}</h3>
+																<p class="summary">{{ book.summary }}</p>
+																<div class="wrap">
+																	<div class="book-tag" v-for="tag in book.tags">{{ tag }}</div>
+
+																	<p class="author single-line">
+																		<span class="author">{{ book.authors }}</span>
+																	</p>
+																</div>
 															</div>
 														</div>
 													</div>
-												</div>
-											</a>
+												</a>
 											</li>
 										</ul>
+										<a class="channel-group__footer" :href="'/list?list_id='+section.reference_id + '&nav='+section.ad_name+'&from=female'">查看更多</a>
 									</section>
 								</div>
 
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 
-	<script src="/script/plugins/vue.js"></script>
-	<script src="https://unpkg.com/vue-lazyload/vue-lazyload.js"></script>
-	<script src="/script/plugins/zepto.js"></script>
-	<script src="/script/pages/female.js"></script>
-</body>
-</html>
+		<script src="/script/plugins/vue.js"></script>
+		<script src="https://unpkg.com/vue-lazyload/vue-lazyload.js"></script>
+		<script src="/script/plugins/zepto.js"></script>
+		<script src="/script/pages/female.js"></script>
+	</body>
+	</html>

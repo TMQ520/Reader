@@ -32,7 +32,6 @@ $.ajax({
 	dataType: 'json',
 	success:function(d) {
 		if(d.result == 0) {
-			console.log(d);
 			var windowWidth = $(window).width();
 			if(windowWidth < 320) {
 				windowWidth = 320;
@@ -47,7 +46,7 @@ $.ajax({
 
 			// 使用图片懒加载中间件
 			Vue.use(VueLazyload, {
-				preLoad: 1.2,
+				preLoad: 1.3,
 				error: 'img/default_book.png',
 				loading: 'img/default_book.png'
 			});
@@ -92,7 +91,9 @@ $.ajax({
 						$(this).toggleClass('shelf__switch_list');
 						$('.shelf > .book-list').toggleClass('shelf-book book-table');
 					});
-
+				},
+				ready: function() {
+					var that = this;
 					// 左右移动屏幕
 					mySwiper = new Swiper ('.swiper-a', {
 						direction: 'horizontal',
@@ -100,8 +101,8 @@ $.ajax({
 						slidesPerView:"auto",
 						resistanceRatio : 0,
 						speed: 500,
-			            onTransitionEnd: function(swiper){
-			            	ind = swiper.realIndex;
+						onTransitionEnd: function(swiper){
+							ind = swiper.realIndex;
 			            	// console.log(ind)
 			            	if(ind == 0){
 			            		that.header_position = index_header_tab_width / 2;
@@ -116,31 +117,22 @@ $.ajax({
 			            onSlideChangeEnd: function(swiper){
 			            },
 			        });
-			        var banner = new Swiper('.swiper-banner', {
-			        	direction: 'horizontal',
-            			resistanceRatio : 0,
-			            loop: true,
-			            autoplay: 2500,
-			            // lazyLoading: true,
-			            nested: true				
-			        });
+					// 轮播图
+					var banner = new Swiper('.swiper-banner', {
+						direction: 'horizontal',
+						resistanceRatio : 0,
+						loop: true,
+						autoplay: 2500,
+						lazyLoading: true,
+						autoplayDisableOnInteraction: false,
+						nested: true				
+					});
 				},
 				//事件绑定---书城和书架的切换
 				methods: {
 					tabSwitch: function (pos) {
 						this.duration = 0.5;
 						this.header_duration = 0.5;
-						/*if(pos == 0) {
-							// this.position = 0;
-							this.header_position = index_header_tab_width/2;
-							this.tab_1_class = "Swipe-tab_on";
-							this.tab_2_class = "";
-						} else {
-							// this.position = (-windowWidth);
-							this.header_position = index_header_tab_width/2 + index_header_tab_width;
-							this.tab_2_class = "Swipe-tab_on";
-							this.tab_1_class = "";
-						}*/
 						mySwiper.slideTo(pos, 500);
 					},
 					// 点击换一换
@@ -178,9 +170,9 @@ $.ajax({
 					}
 				}
 			})
-}
-},
-error:function(err){
+		}
+	},
+	error:function(err){
 		// console.log(err);
 	}
 });

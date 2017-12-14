@@ -54,7 +54,8 @@ female.get('/', async ( ctx ) => {
 //女频页面view
 let male = new Router();
 male.get('/', async ( ctx ) => {
-	await ctx.render('male', {nav: "男频页面"});
+	let params = ctx.query;
+	await ctx.render('male', {nav: params.nav || "男频页面"});
 })
 
 //阅读页面view
@@ -67,6 +68,13 @@ reader.get('/', async ( ctx ) => {
 let catolog = new Router();
 catolog.get('/', async ( ctx ) => {
 	await ctx.render('catolog', {nav: '目录'});
+})
+
+// 抽离的公用view
+let commonView = new Router();
+commonView.get('/', async ( ctx ) => {
+	let params = ctx.query;
+	await ctx.render('lists', {nav: params.nav});
 })
 //=====================-view_end-========================
 
@@ -170,6 +178,21 @@ homeApi.get('/index', async ( ctx ) => {
 		console.log(e)
 	})
 })
+.get('/lists',async ( ctx ) => {
+	let params = ctx.query;
+	var url = commonUrl + '/store/v0/fiction/list/' + params.id;
+	await axios.get(url,{
+		headers: headers,
+		params: {
+			start: params.start,
+			count: params.count
+		}
+	}).then((res) => {
+		ctx.body = res.data
+	}).catch((e) => {
+		console.log(e);
+	})
+})
 .get('/female', async ( ctx) => { //实现女频API
 	ctx.body = await service.get_female_data();
 })
@@ -188,7 +211,9 @@ homeApi.get('/index', async ( ctx ) => {
 	ctx.body = await service.get_male_data();
 })
 .get('/males', async ( ctx ) => {
-	var url = commonUrl + '/hs/v3/channel/369';
+	let params = ctx.query;
+
+	var url = commonUrl + '/hs/v3/channel/' + params.id;
 	await axios.get(url,{
 		headers: headers
 	}).then((res) => {
@@ -243,6 +268,7 @@ homeApi.get('/index', async ( ctx ) => {
 
 
 
+
 module.exports = {
 	home: home,
 	book:book,
@@ -252,6 +278,7 @@ module.exports = {
 	female:female,
 	male:male,
 	catolog:catolog,
+	commonView:commonView,
 	reader:reader,
 	homeApi:homeApi
 };

@@ -1,9 +1,4 @@
-// 使用图片懒加载中间件
-Vue.use(VueLazyload, {
-	preLoad: 1.2,
-	error: 'img/default_book.png',
-	loading: 'img/default_book.png'
-});
+
 
 $.get('/ajax/ranks',function (d) {
 	var windowWidth = $(document.body).width();
@@ -24,6 +19,14 @@ $.get('/ajax/ranks',function (d) {
 			$('#goBack').click(function(){
 				location.href = '/';
 			})
+		},
+		ready: function (){
+			// 使用图片懒加载中间件
+			Vue.use(VueLazyload, {
+				preLoad: 1.2,
+				error: 'img/default_book.png',
+				loading: 'img/default_book.png'
+			});
 		}
 	})
 }, 'json');

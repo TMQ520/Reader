@@ -9,6 +9,15 @@
 	<link rel="stylesheet" href="/css/reset.css"/>
 	<link rel="stylesheet" href="/css/all.css"/>
 	<title><%= nav %></title>
+	<style type="text/css">
+		.channel-group__footer {
+			display: block;
+			border-top: 1px solid #f0f0f0;
+			text-align: center;
+			font-size: 14px;
+			padding: 10px 0;
+		}
+	</style>
 </head>
 <body>
 	<div id="root">
@@ -50,6 +59,7 @@
 												</a>
 											</li>
 										</ul>
+										<a v-if="from == 'male'" class="channel-group__footer" :href="'/list?list_id='+section.reference_id + '&nav='+section.ad_name+'&from=male'">查看更多</a>
 									</section>
 								</div>
 
@@ -63,6 +73,7 @@
 		<script src="/script/plugins/vue.js"></script>
 		<script src="https://unpkg.com/vue-lazyload/vue-lazyload.js"></script>
 		<script src="/script/plugins/zepto.js"></script>
+		<script src="/script/plugins/utils.js"></script>
 		<script src="/script/pages/male.js"></script>
 	</body>
 	</html>

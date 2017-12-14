@@ -21,7 +21,7 @@
 					<section class="channel-group main-card">
 						<ul class="book-list">
 							<li v-for="book in item">
-								<a :href="'/book?id='+ book.fiction_id + '&cate_id=' + cate_id + '&nav=' + nav + '&from=categoryDetails'">
+								<a :href="'/book?id='+ book.fiction_id + '&cate_id=' + cate_id + '&nav=' + nav + '&from='+from">
 									<div class="u-book">
 										<div class="cnt">
 											<div class="book-cover">
@@ -63,7 +63,6 @@
 	<script src="https://unpkg.com/vue-lazyload/vue-lazyload.js"></script>
 	<script src="/script/plugins/zepto.js"></script>
 	<script type="text/javascript" src='/script/plugins/utils.js'></script>
-	<!-- <script type="text/javascript" src='/script/plugins/dropload.min.js'></script> -->
-	<script src="/script/pages/categoryDetails.js"></script>
+	<script src="/script/pages/lists.js"></script>
 </body>
 </html>
