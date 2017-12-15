@@ -1,0 +1,104 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,minimal-ui">
+	<meta name="format-detection" content="telephone=no">
+	
+	<meta name="full-screen" content="yes">
+	<link rel="stylesheet" href="/css/reset.css">
+	<link rel="stylesheet" href="/css/all.css">
+	<link rel="shortcut icon" href="img/favicon.ico">
+	<title><%= nav %></title>
+	<style type="text/css">
+		.top {
+			position: relative;
+			height: 44px;
+			border-bottom: 1px solid #ddd;
+			font: 15px/45px a;
+			color:rgba(0,0,0,0.7);
+			background-color: #efeff0;
+		}
+		.top_back {
+			float: left;
+			width: 42px;
+			height: 44px;
+		}
+		.top_back:before {
+			content: '';
+			display: block;
+			margin: 15px 0 0 16px;
+			width: 10px;
+			height: 16px;
+			background:url(/static/img/back.png) no-repeat;
+			background-size: 10px 16px;
+		}
+
+		.header-home {
+			float: right;
+			width: 44px;
+			height: 44px;
+			background: url(http://image.read.duokan.com/mfsv2/download/fdsc3/p01eZH42sBV7/QTS90E2ZVritaa.png) no-repeat center;
+			background-size: 16px;
+		}
+	</style>
+</head>
+<body>
+
+	<div id="root">
+		<% include include/loading.ejs %>
+		<div id="app" class="Swipe Swipe_full Destructor" v-cloak>
+			<div :style="{width:screen_width+'px'}" style="transition-duration: 0s;">
+				<div :style="{width:screen_width+'px'}">
+					<% include include/common-header.ejs %>
+					<div class="Swipe Swipe_full container-scroll Destructor">
+						<div :style="{width:double_screen_width+'px'}" style="transition-duration: 0s;">
+							<div :style="{width:screen_width+'px'}">
+								<div class="new-page cate-page" data-track="ca">
+									<main class="u-area">
+										<section class="m-cat-male">
+											<div class="u-ttl u-ttl-icn"> <em class="icn-catagory1"></em>
+												<h1>网文男频</h1>
+											</div>
+											<ul class="u-list-2col">
+												<li v-for="item in item.male">
+													<a :href="'/category/details?cate_id=' + item.category_id + '&nav=' + item.label + '&from=category'">
+														<div class="u-cat-item" :style="'background-image:url(' + item.new_image+ ');'">
+															<h3>{{item.label}}</h3>
+															<p class="num">{{item.fiction_count}}</p>
+														</div>
+													</a>
+												</li>
+											</ul>
+										</section>
+										<section class="m-cat-female">
+											<div class="u-ttl u-ttl-icn"> <em class="icn-catagory2"></em>
+												<h1>网文女频</h1>
+											</div>
+											<ul class="u-list-2col">
+												<li v-for="item in item.female">
+													<a :href="'/category/details?cate_id=' + item.category_id + '&nav=' + item.label + '&from=category'">
+														<div class="u-cat-item" :style="'background-image:url(' + item.new_image+ ');'">
+															<h3>{{item.label}}</h3>
+															<p class="num">{{item.fiction_count}}</p>
+														</div>
+													</a>
+												</li>
+											</ul>
+										</section>
+									</main>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="/script/plugins/vue.js"></script>
+	<script src="https://unpkg.com/vue-lazyload/vue-lazyload.js"></script>
+	<script src="/script/plugins/zepto.js"></script>
+	<script src="/script/pages/category.js"></script>
+</body>
+</html>

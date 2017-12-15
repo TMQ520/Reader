@@ -1,0 +1,49 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,minimal-ui">
+	<meta name="format-detection" content="telephone=no">
+	
+	<meta name="full-screen" content="yes">
+	<link rel="shortcut icon" href="img/favicon.ico">
+	<link rel="stylesheet" href="/css/reset.css">
+	<link rel="stylesheet" href="/css/all.css">
+	<title><%= nav %></title>
+</head>
+<body>
+	<div id="root">
+		<div id="app" class="Swipe Swipe_full Destructor" v-cloak>
+			<div :style="{width:screen_width+'px'}" style="transition-duration: 0s;">
+				<div :style="{width:screen_width+'px'}">
+					<% include include/common-header.ejs %>
+					<div class="Swipe Swipe_full container-scroll Destructor">
+						<div :style="{width:double_screen_width+'px'}" style="transition-duration: 0s;">
+							<div :style="{width:screen_width+'px'}">
+								<div>
+									<ul class="original-rank-list">
+										<li class="original-rank-list_item" v-if="$index>18" v-for="item in item.items">
+											<img v-lazy="item.cover" class="original-rank-list_img">
+											<div class="original-rank-list_content">
+												<p class="original-rank-list_page" v-for="book in item.description">
+													<span class="original-rank-list_num">{{ $index + 1}}</span>
+													{{ book }}
+												</p>
+											</div>
+										</li>
+									</ul>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="/script/plugins/vue.js"></script>
+	<script src="https://unpkg.com/vue-lazyload/vue-lazyload.js"></script>
+	<script src="/script/plugins/zepto.js"></script>
+	<script src="/script/pages/rank.js"></script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<style type="text/css">
+	.channel-h5_footer_next {
+		border-top: 1px solid #f0f0f0;
+		overflow: hidden;
+	}
+	.channel-h5_footer_next > a {
+		float: left;
+		width: 50%;
+		padding: 14px;
+		font: 13px/1.3em a;
+		color: rgba(0,0,0,0.9);
+		text-align: center;
+		box-sizing: border-box;
+	}
+	.channel-h5_footer_next > a:first-child {
+		border-right: 1px solid #f0f0f0;
+	}
+	.channel-h5_footer_next > a {
+		float: left;
+		width: 50%;
+		padding: 14px;
+		font: 13px/1.3em a;
+		color: rgba(0,0,0,0.9);
+		text-align: center;
+		box-sizing: border-box;
+	}
+</style>
+
+<section class="channel-h5 channel-h5_next">
+	<div class="channel-h5_header">
+		<p class="channel-h5_title channel-group_title_left">女生最爱</p>
+	</div>
+	<div class="Fade list-h5_wrap">
+		<div style="visibility: visible;">
+			<ul class="list-h5">
+				<li v-for="item in female">
+					<div class="book-h5">
+						<a href="/book?id={{ item.fiction_id }}">
+							<div class="book-h5_cover">
+								
+								<img alt="{{ item.title }}" v-lazy="item.cover">
+								<p class="book-h5_finish" v-if="item.finish">完结</p>
+							</div>
+							<div class="book-h5_info">
+								<p class="book-h5_title">{{ item.title }}</p>
+								<p class="book-h5_author">{{ item.author }}</p>
+								<p class="book-h5_summary">{{ item.summary }}</p>
+								<div class="book-h5_wrap">
+									<div class="book-h5_tag" v-for="tag in item.tags" v-if="$index > 0 && $index < 4">{{ tag }}</div>
+								</div>
+							</div>
+						</a>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="channel-h5_footer_next">
+		<a href="javascript:" class="btn-h5_next" @click="changeContent(female_count, 1)">换一换</a>
+		<a href="/female" class="btn-h5_more">女生频道&gt;&gt;</a>
+	</div>
+</section>

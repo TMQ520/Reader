@@ -1,0 +1,97 @@
+<style type="text/css">
+	.channel-group {
+		position: relative;
+	}
+	.channel-group_header {
+		position: relative;
+		padding: 10px 14px;
+		border-bottom: 1px solid #f0f0f0;
+		border-left: 6px solid #ffab18;
+	}
+	.book-table {
+		padding: 13px 14px 5px;
+		font-size: 0;
+	}
+	.book-table li {
+		width: 33.3%;
+		display: inline-block;
+		vertical-align: top;
+		line-height: 1;
+		margin-bottom: 8px;
+	}
+	.book-table li>* {
+		display: inline-block;
+	}
+	.u-book.-vertical {
+		width: 86px;
+	}
+	.u-book.-vertical .book-cover {
+		float: none;
+		height: 113px;
+		width: 86px;
+	}
+	.u-book.-vertical .title {
+		font-size: 13px;
+		line-height: 1.4em;
+		max-height: 2.8em;
+		overflow: hidden;
+		color: #8d8d8d;
+		margin-bottom: 0px;
+	}
+	.u-book.-vertical .title, .u-book.-vertical .author {
+		text-align: left;
+	}
+	.u-tagRT, .u-tagLT, .u-subscript {
+		position: absolute;
+		top: 0;
+		left: 0;
+		line-height: 1.4;
+		background-color: #ef6c2c;
+		color: #fff;
+		width: 100%;
+		-webkit-transform-origin: top center;
+		-webkit-transform: translateX(50%) rotate(45deg) translateY(50%) scale(0.8);
+		font-size: 1.4rem;
+		text-align: center;
+	}
+	.book-cover .u-tagRT.-freefiction {
+		background-color: #49ab3f;
+	}
+	.book-cover .u-tagRT.-freefiction:before {
+		content: '\9650\514d';
+	}
+	.channel-group_footer {
+		display: block;
+		border-top: 1px solid #f0f0f0;
+		text-align: center;
+		font-size: 14px;
+		padding: 10px 0;
+	}
+	.u-book.-vertical .info {
+		margin-left: 0;
+		padding-top: 8px;
+	}
+</style>
+<section class="channel-group main-card">
+	<div class="channel-group_header">
+		<h2 class="channel-group_title channel-group_title_left">限时免费</h2>
+	</div>
+	<ul class="book-table">
+		<li v-for="item in free">
+			<a href="/book?id={{ item.data.fiction_id }}">
+				<div class="u-book -vertical">
+					<div class="book-cover">
+						
+						<img alt="{{ item.ad_name }}" v-lazy="item.data.cover">
+						<div class="u-tagRt -freefiction"></div>
+						<p class="book-h5_finish" v-if="item.data.finish">完结</p>
+					</div>
+					<div class="info">
+						<h3 class="title">{{ item.ad_name }}</h3>
+					</div>
+				</div>
+			</a>
+		</li>
+	</ul>
+	<a class="channel-group_footer" href="/male?nav=免费专区&from=free">更多限免佳作&gt;&gt;</a>
+</section>

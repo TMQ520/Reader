@@ -265,6 +265,42 @@ homeApi.get('/index', async ( ctx ) => {
 		console.log(e);
 	})
 })
+.get('/fictions_list', async ( ctx ) => {
+	let url = commonUrl + '/store/v0/fiction/id_list';
+	let params = ctx.query;
+	await axios.get(url,{
+		headers:headers,
+		params: params
+	}).then((res) => {
+		ctx.body = res.data;
+	}).catch((e) => {
+		console.log(e)
+	})
+})
+// 获取搜索标签
+.get('/search/ad', async ( ctx ) => {
+	let url = commonUrl + '/store/v0/ad';
+	let params = ctx.query;
+	await axios.get(url, {
+		headers:headers,
+		params:params
+	}).then((res) => {
+		ctx.body = res.data;
+	}).catch((e) => {
+		ctx.body = e;
+	})
+})
+// 获取搜索内容
+.get('/search/query', async( ctx ) => {
+	let url = commonUrl + '/store/v0/lib/query/onebox';
+	let params = ctx.query;
+	await axios.get(url, {
+		headers: headers,
+		params:params
+	}).then((res) => {
+		ctx.body = res.data;
+	})
+})
 
 
 

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,minimal-ui">
+	<meta name="format-detection" content="telephone=no">
+	
+	<meta name="full-screen" content="yes">
+	<link rel="shortcut icon" href="img/favicon.ico">
+	<link rel="stylesheet" href="/css/reset.css">
+	<link rel="stylesheet" href="/css/all.css">
+	<title><%= nav %></title>
+</head>
+<body>
+	<% include include/loading.ejs %>
+	<div id="app" class="Swipe Swipe_full container-scroll Destructor" style="top: 0;" v-cloak>
+		<div :style="{width:double_screen_width+'px'}" style="transition-duration: 0s;">
+			<div :style="{width:screen_width+'px'}">
+				<% include include/common-header.ejs %>
+				<div class="new-page channel-page">
+					<section class="channel-group main-card">
+						<ul class="book-list">
+							<li v-for="book in item">
+								<a :href="'/book?id='+ book.fiction_id + '&cate_id=' + cate_id + '&nav=' + nav + '&from='+from">
+									<div class="u-book">
+										<div class="cnt">
+											<div class="book-cover">
+												<img alt="{{ book.title }}" v-lazy="book.cover">
+												<div class="u-tagRT"></div>
+											</div>
+											<div class="info">
+												<h3 class="title single-line">{{ book.title }}</h3>
+												<p class="summary">{{ book.summary }}</p>
+												<div class="wrap">
+													<p class="author single-line">
+														<span class="author">{{ book.authors }}</span>
+													</p>
+												</div>
+											</div>
+										</div>
+									</div>
+								</a>
+							</li>
+						</ul>
+						
+						<div class="loading" style="margin: 0px auto; width: 100%;height: 25px;">
+							<div v-if="load == true" class="loading-icon" style="margin: 0px auto;"></div>
+							<img v-if="more && load == false" src="/img/loadmore.png" @click="getDetails()" style="width: 15px;height: 15px;margin: 0 auto;display: block;padding: 20px 20px 10px 20px;"></div>
+							<div v-if="load == false && more == false" style="text-align: center;">没有更多数据了...</div>
+						</section></div>
+					
+				</div>
+			</div>
+		</div>
+	
+	<script type="text/javascript">
+		window.onload = function () {
+			var loading = document.getElementById('init_loading');
+			loading.style.display = 'block';
+		};
+	</script>
+	<script src="/script/plugins/vue.js"></script>
+	<script src="https://unpkg.com/vue-lazyload/vue-lazyload.js"></script>
+	<script src="/script/plugins/zepto.js"></script>
+	<script type="text/javascript" src="/script/plugins/utils.js"></script>
+	<script src="/script/pages/lists.js"></script>
+</body>
+</html>

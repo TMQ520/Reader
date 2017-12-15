@@ -1,0 +1,89 @@
+<style type="text/css">
+	.top-home{
+		background-color: #fff;
+		border-bottom: 10px solid #f5f5f5;
+	}
+	.top-home-search{
+		margin: 10px 13px;
+		padding: 1px 0 0 30px;
+		font: 11px/33px a;
+		color: rgba(0,0,0,0.4);
+		background: url(http://www.duokan.com/m/static/images/icon.png?bd449e12560d226c8be720e820f430e8) no-repeat center;
+		background-position: 8px -22px;
+		background-size: 16px;
+		border: 1px solid #f5f5f5;
+		border-radius: 2px;
+	}
+	.cover{
+		width: 100%;
+	}
+	.top-home-btn{
+		margin: 14px 0 4px;
+		display: -webkit-box; /*这里使用flex*/
+		width: 100%;
+	}
+	.top-home-btn li{
+		line-height: 2.4;
+		font-size: 12px;
+		text-align: center;
+		-webkit-box-flex: 1;
+	}
+	.top-home-icon{
+		display: block;
+		margin: 0 auto;
+		height: 22px;
+		width: 22px;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: 22px;
+		vertical-align: -5px;
+	}
+	.swiper-banner > .swiper-wrapper,.swiper-banner > .swiper-wrapper > .swiper-slide{
+		height: 12rem;
+	}
+</style>
+
+<section class="top-home">
+	<a href="/search">
+		<div class="top-home-search">
+			输入书名/作者/关键字
+		</div>
+	</a>
+	
+	<div class="swiper-container swiper-banner">
+		<div class="swiper-wrapper">
+			<div class="swiper-slide" v-for="item in top" track-by="$index">
+				<a :href="'http://dushu.xiaomi.com/#page=topic&type=fiction&id='+ item.reference_id">
+					<img class="cover" :src="item.ad_pic_url" title="{{$index}}">
+				</a>
+			</div>
+		</div>
+		
+	</div>
+	<ul class="top-home-btn">
+		<li>
+			<a href="/male">
+				<img class="top-home-icon" src="http://image.read.duokan.com/mfsv2/download/s010/p01lq7mbkaEJ/OGlv1em8buXDgB.png">
+				<p calss="top-home-des">男生</p>
+			</a>
+		</li>
+		<li>
+			<a href="/female">
+				<img class="top-home-icon" src="http://image.read.duokan.com/mfsv2/download/s010/p01LWZmXGCpy/aSrSq6Llgt9PqE.png">
+				<p calss="top-home-des">女生</p>
+			</a>
+		</li>
+		<li>
+			<a href="/category">
+				<img class="top-home-icon" src="http://image.read.duokan.com/mfsv2/download/s010/p01pz5NtyRI0/2ENONnvOg23NXM.png">
+				<p calss="top-home-des">分类</p>
+			</a>
+		</li>
+		<li>
+			<a href="/rank">
+				<img class="top-home-icon" src="http://image.read.duokan.com/mfsv2/download/s010/p010kK7M5VyH/8kPz9nKvRXyu1k.png">
+				<p calss="top-home-des">排行</p>
+			</a>
+		</li>
+	</ul>
+</section>

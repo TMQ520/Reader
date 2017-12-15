@@ -1,0 +1,79 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,minimal-ui">
+	<meta name="format-detection" content="telephone=no">
+	
+	<meta name="full-screen" content="yes">
+	<link rel="shortcut icon" href="img/favicon.ico">
+	<link rel="stylesheet" href="/css/reset.css">
+	<link rel="stylesheet" href="/css/all.css">
+	<title><%= nav %></title>
+	<style type="text/css">
+		.channel-group__footer {
+			display: block;
+			border-top: 1px solid #f0f0f0;
+			text-align: center;
+			font-size: 14px;
+			padding: 10px 0;
+		}
+	</style>
+</head>
+<body>
+	<div id="root">
+		<% include include/loading.ejs %>
+		<div id="app" class="Swipe Swipe_full Destructor" v-cloak>
+			<div :style="{width:screen_width+'px'}" style="transition-duration: 0s;">
+				<div :style="{width:screen_width+'px'}">
+					<% include include/common-header.ejs %>
+					<div class="Swipe Swipe_full container-scroll Destructor">
+						<div :style="{width:double_screen_width+'px'}" style="transition-duration: 0s;">
+							<div :style="{width:screen_width+'px'}">
+								<div class="new-page channel-page">
+									<section class="channel-group main-card" v-for="section in item.items">
+										<div class="channel-group_header">
+											<h2 class="channel-group_title channel-group_title_left">{{section.ad_name}}</h2>
+										</div>
+										<ul class="book-list">
+											<li v-for="book in section.data.data">
+												<a :href="'/book?id='+ book.fiction_id +'&from=male'">
+													<div class="u-book">
+														<div class="cnt">
+															<div class="book-cover">
+																<img alt="{{ book.title }}" v-lazy="book.cover">
+																<div class="u-tagRT"></div>
+															</div>
+															<div class="info">
+																<h3 class="title single-line">{{ book.title }}</h3>
+																<p class="summary">{{ book.summary }}</p>
+																<div class="wrap">
+																	<div class="book-tag" v-for="tag in book.tags">{{ tag }}</div>
+
+																	<p class="author single-line">
+																		<span class="author">{{ book.authors }}</span>
+																	</p>
+																</div>
+															</div>
+														</div>
+													</div>
+												</a>
+											</li>
+										</ul>
+										<a v-if="from == 'male'" class="channel-group__footer" :href="'/list?list_id='+section.reference_id + '&nav='+section.ad_name+'&from=male'">查看更多</a>
+									</section>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="/script/plugins/vue.js"></script>
+		<script src="https://unpkg.com/vue-lazyload/vue-lazyload.js"></script>
+		<script src="/script/plugins/zepto.js"></script>
+		<script src="/script/plugins/utils.js"></script>
+		<script src="/script/pages/male.js"></script>
+	</div></body>
+	</html>

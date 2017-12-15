@@ -11,7 +11,7 @@ const routers = require("./service/routes");
 // axios.defaults.withCredentials = true;
 
 //静态资源路径
-const staticPath = './app/static';
+const staticPath = './dist/static';
 
 
 //实现代理
@@ -39,7 +39,7 @@ app.use(static(
 )
 
 //加载模板引擎  挂载到ctx.render上
-app.use(views( path.join( __dirname, './app/view'), {
+app.use(views( path.join( __dirname, './dist/view'), {
 	extension: 'ejs'
 }))
 
@@ -62,7 +62,7 @@ router.use('/', routers.home.routes())
 .use('/ajax', routers.homeApi.routes());
 
 app.use(router.routes())
-var port = process.env.PORT || '3000';
+var port = process.env.PORT || '3008';
 
 app.listen(port);
-console.log('Service is starting in port 3000');
+console.log('Service is starting in port 3008');

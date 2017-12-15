@@ -1,0 +1,1 @@
+$.get("/ajax/females",function(e){var o=$(document.body).width();o<320&&(o=320),Vue.use(VueLazyload,{"preLoad":1.3,"error":"img/default_book.png","loading":"img/default_book.png"}),new Vue({"el":"#app","data":{"screen_width":o,"double_screen_width":2*o,"item":e},"created":function(){$("#goBack").click(function(){location.href="/"}),$("#init_loading").hide()}})},"json");
