@@ -72,6 +72,19 @@ $(function(){
 					return world;
 				}
 			},
+			ready: function () {
+				var summaryHeight = $('#seeMore').children().eq(0).height();
+				if(summaryHeight < 60){
+					$('#seeMore').children().eq(1).hide();
+				} else {
+					// 点击更多描述
+					$('#seeMore').off().click(function () {
+						$(this).children().eq(0).toggleClass('folder-summary')
+						$(this).children().eq(1).toggle()
+					});
+				}
+
+			},
 			methods: {
 				readBook: function() { // 跳转到读书页面
 					var from;

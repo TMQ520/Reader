@@ -62,7 +62,7 @@ router.use('/', routers.home.routes())
 .use('/ajax', routers.homeApi.routes());
 
 app.use(router.routes())
-var port = process.env.PORT || '3000';
+var port = process.env.PORT || '3100';
 
 app.listen(port);
-console.log('Service is starting in port 3000');
+console.log('Service is starting in port ' + port);

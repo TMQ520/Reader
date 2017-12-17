@@ -450,7 +450,7 @@
 				var font_container_trasnlated3d = font_container.css('transform').replace(/[^0-9\-,]/g,'').split(',');
 				
 				if (font_container_trasnlated3d[1] <= font_container.height() && font_container_trasnlated3d[1] > 0) { // 隐藏
-					console.log(font_container_trasnlated3d[1])
+					// console.log(font_container_trasnlated3d[1])
 					font_button.addClass('current');
 					font_container.css('transform','translate3d(0, -' + Dom.bottom_nav.height() + 'px,0)');
 				} else if(font_container_trasnlated3d[1] < 0 ) { // 显示
@@ -543,6 +543,20 @@
 					font_button.removeClass('current');
 				}
 			});
+
+			// 点击移动屏幕(向上)
+			$('#action_top').click(function  () {
+				var height = $(window).height() - 20;
+				var scrollTop = scroll().top;
+				Screen.scrollTop = Math.max(0,scrollTop - height);
+			})
+			// 点击移动屏幕(向下)
+			$('#action_bottom').click(function  () {
+				var height = $(window).height() - 20;
+				var scrollTop = scroll().top;
+				Screen.scrollTop = Math.min(height + scrollTop, documentHeight());
+			});
+
 		})();
 	}
 

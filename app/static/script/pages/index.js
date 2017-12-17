@@ -98,7 +98,7 @@ $.ajax({
 							success: function (res) {
 								if(res.result == 0) {
 									that.fiction_array = res.items;
-									console.log(that.fiction_array);
+									// console.log(that.fiction_array);
 								}
 							},
 							error: function (e) {

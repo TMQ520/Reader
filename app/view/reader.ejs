@@ -462,6 +462,15 @@
 		.reader__ft-bar a:nth-child(2) {
 		    width: 50%;
 		}
+		.artical-action-top, .artical-action-bottom{
+			position: fixed;
+			width: 100%;
+			height: 30%;
+			z-index: 10002;
+		}
+		.artical-action-bottom{
+			bottom: 0;
+		}
 	</style>
 </head>
 <body>
@@ -469,7 +478,9 @@
 	<div class="container" id="root">
 		<div id="fiction_chapter_title"></div>
 		<div class="m-artical-action">
+			<div class="artical-action-top" id="action_top"></div>
 			<div class="artical-action-mid" id="action_mid"></div>
+			<div class="artical-action-bottom" id="action_bottom"></div>
 		</div>
 		<div class="m-read-content">
 			<div id="fiction_container">

@@ -65,4 +65,4 @@ app.use(router.routes())
 var port = process.env.PORT || '3008';
 
 app.listen(port);
-console.log('Service is starting in port 3008');
+console.log('Service is starting in port ' + port);
