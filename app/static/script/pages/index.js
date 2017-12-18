@@ -109,6 +109,24 @@ $.ajax({
 						this.fiction_array = fiction_array;
 					}
 					
+					/*$.ajax({
+						url: '/ajax/adduser',
+						type:'post',
+						data: {
+							username: '小五',
+							password: 123456,
+							phone: 15628933104
+						},
+						dataType: 'json',
+						success: function (res) {
+							if(res.result == 0) {
+								console.log(res.data);
+							}
+						},
+						error: function (err) {
+							console.log(err)
+						}
+					})*/
 				},
 				ready: function() {
 					var that = this;

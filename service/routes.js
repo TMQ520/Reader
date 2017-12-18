@@ -1,8 +1,10 @@
 const axios = require('axios');
 const Router = require('koa-router');
+var koaBody = require('koa-body');
 
 //获取 Mock数据接口-service模块接口
 const service = require('./webAppService.js');
+
 //=====================-view-============================
 //书城功能首页
 let home = new Router();
@@ -301,8 +303,65 @@ homeApi.get('/index', async ( ctx ) => {
 		ctx.body = res.data;
 	})
 })
+// 添加新用户
+.post('/adduser', koaBody(), async ( ctx ) => {
+	// let postData = await parsePostData( ctx );
+	let postData = ctx.request.body;
+	// console.log(postData)
+	try{
+		let userInfo = await service.getRow({phone: postData.phone});
+		if(userInfo != undefined) {
+			console.log('用户已注册')
+			ctx.status = 200;
+			ctx.body = {result: 100, data: '用户已注册'};
+		} else {
+			try{
+				await service.insert(postData);
+				console.log('注册成功');
+				ctx.status = 200;
+				ctx.body = {result: 0, data: '注册成功'};
+			} catch(err) {
+				ctx.status = 500;
+				ctx.body = err.message;
+			}
+		}
+	}catch(err){
+		ctx.status = 500;
+		ctx.body = err.meassge;
+	}
+	
+})
 
 
+
+// 解析上下文里node原生请求的POST参数
+function parsePostData( ctx ) {
+	return new Promise((resolve, reject) => {
+		try {
+			let postdata = "";
+			ctx.req.addListener('data', (data) => {
+				postdata += data
+			})
+			ctx.req.addListener("end",function(){
+				let parseData = parseQueryStr( postdata )
+				resolve( parseData )
+			})
+		} catch ( err ) {
+			reject(err)
+		}
+	})
+}
+
+// 将POST请求参数字符串解析成JSON
+function parseQueryStr( queryStr ) {
+	let queryData = {}
+	let queryStrList = queryStr.split('&')
+	for (  let [ index, queryStr ] of queryStrList.entries()  ) {
+		let itemList = queryStr.split('=')
+		queryData[ itemList[0] ] = decodeURIComponent(itemList[1])
+	}
+	return queryData
+}
 
 
 module.exports = {

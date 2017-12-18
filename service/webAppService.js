@@ -1,6 +1,10 @@
 var fs = require('fs');
+var SQLite3 = require('sqlite3');
+var Promise = require('promise');
+var path = require('path');
 
-//获取首页数据
+
+/*//获取首页数据
 exports.get_index_data = function () {
 	var content = fs.readFileSync('./mock/home.json', 'utf-8');
 	return content;
@@ -90,7 +94,7 @@ exports.get_chapter_content_data = function (id) {
 		})
 	});
 };
-
+*/
 //获取搜索数据
 exports.get_search_data = function (start, end, keyword) {
 	return new Promise (function (resolve, reject) {
@@ -123,3 +127,102 @@ exports.get_search_data = function (start, end, keyword) {
 
 	});
 }
+
+
+
+// 连接数据库
+var db = new SQLite3.Database(path.resolve(__dirname, "../dataCache/reader.db"), function () {
+	console.log('连接数据库成功...');
+});
+
+
+// 向数据库中插入数据
+function insert(obj) {
+	var sql = `insert into user_table (username,password,phone) values(?,?,?)`;
+	var params = [
+		obj.username,
+		obj.password,
+		obj.phone
+	];
+
+	return runSql(sql,params);
+}
+
+// 向数据库增加数据
+function update(obj) {
+	var sql = `update user_table set username=?,password=?,phone=? where id=?`;
+	var params = [
+		obj.username,
+		obj.password,
+		obj.phone,
+		obj.id
+	];
+
+	/*return new Promise(function (resovle,reject){
+		db.run(sql,params, function (err){
+			err ? reject(err) : resolve(123);
+		})
+	}) */
+	return runSql(sql, params);
+}
+
+// 向数据库删除数据
+function deleteRow(obj) {
+	var sql = `delete from user_table where phone=?`;
+	return runSql(sql,[obj.phone]);
+}
+
+
+// 向数据库查询
+function getRow(obj) {
+	var sql = `select * from user_table where phone=?`;
+
+	return new Promise(function (resolve, reject){
+		db.get(sql, [obj.phone], function (err, data){
+			if(err) {
+				reject(err)
+			} else {
+				resolve(data);
+			}
+		})
+	})
+}
+
+
+// 查所哟出数据需要做分页
+function getAll() {
+	var sql = `select * from user_table`;
+
+	return new Promise(function (resolve, reject) {
+		db.all(sql, function (err, data){
+			if(err) {
+				reject(err);
+			} else {
+				resovle(data);
+			}
+		})
+	})
+}
+
+//封装运行sql语句的方法
+function runSql (sql,parmas) {
+	return new Promise(function (resolve,reject) {
+
+		//三个参数  sql语句, 参数数组, 回调函数
+		db.run(sql, parmas, function  (err) {
+			if(err) {
+				reject(err);	//失败 返回一个被拒绝的Promise对象
+			} else {
+				resolve(); 	//返回一个解析后成功的Promise对象
+			}
+		});
+	});
+}
+
+module.exports = {
+	getAll: getAll,
+	getRow: getRow,
+	deleteRow: deleteRow,
+	update: update,
+	insert: insert
+};
