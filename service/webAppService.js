@@ -1,6 +1,6 @@
 var fs = require('fs');
 var SQLite3 = require('sqlite3');
-var Promise = require('promise');
+// var Promise = require('promise');
 var path = require('path');
 
 
