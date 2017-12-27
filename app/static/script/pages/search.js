@@ -7,8 +7,8 @@ new Vue({
 	data: {
 		search:[],
 		tags: [], // 搜索标签
-		condition:true,
-		empty:false,
+		condition: true,
+		empty: false,
 		load: false,
 		more: true,
 		keyword: '',
@@ -28,6 +28,7 @@ new Vue({
 				console.log(that.tags)
 			}
 		})
+		$('#init_loading').hide();
 	},
 	methods: {
 		searchTag: function (index) {
@@ -35,10 +36,9 @@ new Vue({
 			this.doSearch();
 		},
 		doSearch: function() {
-
 			start = 0;
 			var _this = this; //将Vue实例存起来
-
+			$('#init_loading').show();
 			$.ajax({
 				url: '/ajax/search/query',
 				type:'get',
@@ -51,6 +51,7 @@ new Vue({
 				dataType:'json',
 				success: function (res) {
 					if(res.result == 0) {
+						$('#init_loading').hide();
 						_this.more = res.more;
 						_this.search = res.items;
 						_this.condition = false;
