@@ -472,7 +472,10 @@
 				font_button.removeClass('current');
 
 				// 监听是否滚到底部
-				if(scroll().top + windowHeight() >= (documentHeight() - 50)) {
+				var scrollTop = scroll().top + windowHeight(),
+					documentheight = documentHeight(),
+					loadDistance = documentheight - scrollTop; // 加载距离
+				if( loadDistance <= windowHeight()*2 ) {
 					// 当加载到离底部只差一点距离时,
 					//请求新的数据
 					// console.log('windowHeight: ' + windowHeight())
