@@ -1,5 +1,5 @@
 var fs = require('fs');
-var SQLite3 = require('sqlite3');
+// var SQLite3 = require('sqlite3');
 // var Promise = require('promise');
 var path = require('path');
 
@@ -131,9 +131,9 @@ exports.get_search_data = function (start, end, keyword) {
 
 
 // 连接数据库
-var db = new SQLite3.Database(path.resolve(__dirname, "../dataCache/reader.db"), function () {
-	console.log('连接数据库成功...');
-});
+// var db = new SQLite3.Database(path.resolve(__dirname, "../dataCache/reader.db"), function () {
+// 	console.log('连接数据库成功...');
+// });
 
 
 // 向数据库中插入数据

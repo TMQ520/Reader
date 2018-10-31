@@ -1,0 +1,37 @@
+{
+  "name"              : "Mango",
+  "short_name"        : "Mango",
+  "description"       : "一个读书类网站",
+  "start_url"         : "/app/view/index.ejs",
+  "display"           : "standalone",
+  "orientation"       : "any",
+  "background_color"  : "#ACE",
+  "theme_color"       : "#ACE",
+  "icons": [
+    {
+      "src"           : "./static/img/mango.png",
+      "sizes"         : "72x72",
+      "type"          : "image/png"
+    },
+    {
+      "src"           : "./static/img/ango.png",
+      "sizes"         : "152x152",
+      "type"          : "image/png"
+    },
+    {
+      "src"           : "./static/img/mango.png",
+      "sizes"         : "192x192",
+      "type"          : "image/png"
+    },
+    {
+      "src"           : "./static/img/mango.png",
+      "sizes"         : "256x256",
+      "type"          : "image/png"
+    },
+    {
+      "src"           : "./static/img/mango.png",
+      "sizes"         : "512x512",
+      "type"          : "image/png"
+    }
+  ]
+}

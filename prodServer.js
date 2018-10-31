@@ -62,7 +62,7 @@ router.use('/', routers.home.routes())
 .use('/ajax', routers.homeApi.routes());
 
 app.use(router.routes())
-var port = process.env.PORT || '3008';
+var port = process.env.PORT || '3500';
 
 app.listen(port);
 console.log('Build Service is starting in port ' + port);

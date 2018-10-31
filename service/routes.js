@@ -304,7 +304,7 @@ homeApi.get('/index', async ( ctx ) => {
 	})
 })
 // 添加新用户
-.post('/adduser', koaBody(), async ( ctx ) => {
+/*.post('/adduser', koaBody(), async ( ctx ) => {
 	// let postData = await parsePostData( ctx );
 	let postData = ctx.request.body;
 	// console.log(postData)
@@ -330,7 +330,7 @@ homeApi.get('/index', async ( ctx ) => {
 		ctx.body = err.meassge;
 	}
 	
-})
+})*/
 
 
 
