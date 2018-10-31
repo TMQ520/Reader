@@ -165,9 +165,10 @@
 	<ul class="book-list">
 		<li v-for="book in fiction_array">
 			<div class="u-book">
-				<a :href="'/book?id='+book.fiction_id">
+				<a :href="'/reader?fiction_id='+book.fiction_id + '&chapter_id=0&from=shelf'">
 					<div class="book-cover">
 						<img v-lazy="book.cover">
+						<p class="book-h5_finish" v-if="book.finish">完结</p>
 					</div>
 
 					<div class="info">
@@ -175,7 +176,7 @@
 						<p class="author single-line">
 							<span class="author">{{book.authors}}</span>
 						</p>
-						<p class="extra single-line">已读：第2章 少年承诺</p>
+						<p class="extra single-line" v-if="book.last_chapter_title">已读：{{book.last_chapter_title}}</p>
 						<div class="wrap">
 							<p class="extra single-line">{{book.latest}}</p>
 						</div>

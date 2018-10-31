@@ -27,6 +27,7 @@
 											<div class="book-cover">
 												<img alt="{{ book.title }}" v-lazy="book.cover">
 												<div class="u-tagRT"></div>
+												<p class="book-h5_finish" v-if="book.finish">完结</p>
 											</div>
 											<div class="info">
 												<h3 class="title single-line">{{ book.title }}</h3>

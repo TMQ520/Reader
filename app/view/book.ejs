@@ -42,7 +42,7 @@
 		.u-book.-detail .book-cover{width: 100px;height: 134px;}
 		.u-book.-detail .author {color:#4b99a7;}
 		.u-book.-detail .author>span {display: inline-block;margin-right:5px;}
-		.u-book.-detail .title {margin-bottom: :13px;font-size: 16px;}
+		.u-book.-detail .title {margin-bottom: 13px;font-size: 16px;}
 		.u-book.-detail .info {
 			padding: 0 0 0 14px;
 			display: table-cell;
@@ -102,7 +102,7 @@
 			content:'\5f00\59cb\9605\8bfb';/*开始阅读*/
 		}
 		.btn-group {width: 100%;font-size: 0;white-space: nowrap;}
-		.bth-group li {display: inline-block;width: 49%};
+		.bth-group li {display: inline-block;width: 49%;}
 		.bth-group li:only-child{width: 100%}
 		.bth-group li:first-child{margin-right: 2%}
 		.u-btn2{
@@ -216,6 +216,17 @@
 		    -webkit-box-orient: vertical;
 		    text-overflow: ellipsis;
 		}
+		.book-h5_finish {
+			position: absolute;
+			bottom: 0;
+			width: 100%;
+			box-sizing: border-box;
+			font: 10px/10px a;
+			padding: 25px 7px 6px;
+			color: #fff;
+			background: -webkit-linear-gradient(top,rgba(0,0,0,0),rgba(0,0,0,0.3));
+
+		}
 	</style>
 </head>
 <body>
@@ -228,6 +239,7 @@
 					<div class="u-book -detail">
 						<div class="book-cover">
 							<img :alt="item.title" v-lazy="item.cover">
+							<p class="book-h5_finish" v-if="item.finish">完结</p>
 						</div>
 						<div class="info">
 							<h3 class="title" v-cloak>{{ item.title }}</h3>

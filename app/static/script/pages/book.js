@@ -90,8 +90,8 @@ $(function(){
 					var from;
 					var chapter_id = Storage.getItem(this.item.fiction_id + '_last_chapter') || 0;
 					params.from ? from = params.from : from = 'book';
-					
-					// 将书存入书架
+
+                    // 将书存入书架
 					var fiction_array = JSON.parse(Storage.getItem('fiction_array')) || [];
 					if(fiction_array.length > 0){
 						var result = isEqual(fiction_array, this.item.fiction_id);
